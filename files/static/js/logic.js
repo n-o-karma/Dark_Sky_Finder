@@ -1,8 +1,8 @@
-const globeatnightURL = 'https://s3.us-west-2.amazonaws.com/noirlab.edu.cee.prod/globeatnight/documents/GaN2022.json?AWSAccessKeyId=ASIAWX3YSJVTETPURX3O&Signature=fQXEvdbijyf4j%2BSZ%2FaDQ3yn6UIk%3D&x-amz-security-token=IQoJb3JpZ2luX2VjENj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDvOSjZrbvgzkIlDDupHsh5h4QDXw5TbGCzMryPkhhHlwIgJN2k80eQA2XPAPQ6JGCXrxWoZH%2BKgs%2F8LFloFuZ7v0MqjgUI4f%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw0NjM1NzI0NTQ3NTgiDBqb1KHrVS3E0VHzCCriBOyJ1M6IEJ%2B4Kmg2uiFiUyxNDqVs1aDwa7Bre7FkMZDARO%2Fx9pQVku2HQfN5SFCVHRAsF3J0WyGT0WPiZcQ6zIBGVwc%2BIxRtKxfZW7Ffja6NL2n1JqsHatayoMX3fafV9TdXzlu3GghK2Vq9zhkWSp9S0UayBg1LOFT3FtlnofAxfnQyrthub5GJwU%2F5wykIyIfkQdC2FANm%2BtzjTKtomWCUSLCOfYTMI%2B0g%2FaFTd5vdM%2BT3dzK4JeRxsZdMeRQTlUa9xD5FC9sjsRNE8TblT3lLy7OcO%2BoClGbL02WekMIp%2FXKkxrS%2BomvgEEDMXD0OiVHa%2Fs6XSvkniECwm3YrLFxh96nGh%2B9baLRxaG4OVYLh%2FW25Rkni17mNz7Wfu5DK50IRWSnEZusBZ%2FejZYHvFpJu%2BzJZrWWozYAUHRQZSBQezotMTkGDLj00LbJq0ZoutQpalC%2FAA6lblOnI2dmpqWxcUHQJnOEiTr%2BF7a1jy8f1Gi7hTcSiWMF42NXvEigl0QhFsIbnYZ8nvXZuWLIugD5xixFi6b9T5HLNyl7tIU2XM0ev61bFGuhf8a05kVEQLJu6kmk02WJyBQ9t9IL%2F5bmo1y%2BMUez0RWmnB%2BMD2PxzhDUipSaQ1fCFGoJD1cW7MfGhWQWMynhS%2BZ7V2E4QccXm2JLFASvDwvwps1vP6zGyv9Wo58ZzZX2hKay%2B6h3CiXerQ6GrUbgUUmonywEJ3X3obRdtbbCHwGKXhJNbWpRkxK21PgoONqBLqwsK2TXzGgtP78kUqijsUhiOI5Ru%2FQ%2FZcuTr1DekwBtmzv5vcrNRpJUw4cGXqQY6mgHeZAHvnurL8dSy1NaJVmaaKIGJI3%2BY9C%2BowrsQ2Uh1iL09kapMZ85k8Aap%2Ffg1%2FWhzuYZNAHZOV%2FQQ7Womz2RLFmJqNGWpqSt92T6Tj1wo5eFZpkvNWMSeXW%2BoP1E1rlwgMuHVcTcgKOPAzfv8XQwb5hUwZul%2FeUSEUULqBY3wnDwqALQhoZHaie6o%2Br8EVBQlxuipUdfmwYvR&Expires=1696986844';
+const globeatnightURL = 'https://s3.us-west-2.amazonaws.com/noirlab.edu.cee.prod/globeatnight/documents/GaN2022.json?AWSAccessKeyId=ASIAWX3YSJVTNP64QOPM&Signature=F3P8VEIPR%2BSpwiM%2BPYlxTgINv5k%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEOT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDsC2M%2BawiVaHmJvTt0ya9eRxq%2BgwH0EERsRtu4aJDdyQIgITmBx%2FsoTcH2qW5G56nn7PTzmGvn72x%2B6T658vwWfJAqjgUI7f%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgw0NjM1NzI0NTQ3NTgiDKptNihQUXEHwCZHrCriBJwnSmZINfIbyEeHAXfVYL0AcaiMDKTk4ZY%2FqNMplP5vZ7doV93NJCg0AsVH3MPWJnSFijy1G5YPFXiWiZ7Qs%2Bh9Bh3qo2BAr8FYCZ31vD3ehpdiVwhSWPqF%2B9Zdz1EfnKZA4ZAE5GDCOLpuGEwMcdxkVmJxjOSM9POAJyRiPr%2Ff5g0h5%2FrHxK9TT0U4L9BbPlHOFUz2AopDdbg%2BDaOj52aEbuWc9PAmU3l5qgqk0vx3Jaid7AdP0QpCqEKjy59uQWSVGgBYWpLtToTXlEFGL8invWiPTlmbLmVqy3kjr4Qzi4BNYErrDpgfdykHJAlTSq56B2b7x4WHAJLbgFLB5ExRnCO1LGK%2BuVZrBaoLrfPrIGo%2FMUkYcpxa79maOsTuyj2Wka5Dz9fy%2FwuBQNPikQ0PosZsJNoeyUAuut4rp6fv%2FLYmt1aeaSxhnahaNP%2FFC5gTV6M9CXW9TA3X38Tcj5umCriuTZPphsOBOelNui2LTFkyhVXfonhzNDkedBpMbI%2B1fMx5v6zX1lGVIPHmLWe8mg0buPEXiTSpbToX%2BYpHx3tNyXwXDaey01CSmA57kwC3kplzdEmJMSrbAkPXuFBCW4qgfYMKSmgIzIxQgx3tJHp367bRe7k5ih9L9NvGcJm3cunFByJflkX%2BWxKN6xfhVdIXF9FCnCGHwfhf1t7jc41nn%2BaBwKegqWksyuW%2F93%2BJwvazLUd0aGQ4sQwHFRgqkcs6sGAo3WR2SLbXhJ1eb%2BW%2BD9rGuHEvn0WrhiwZamL6%2BLAE0Ui7mwH1YTD%2FjOG9QsaYpszLvvy47CM5nUFczO4w35SaqQY6mgGvCsTKn9kwOT91NjnSIkQUI2ST%2B%2FFa53UjcxA8Mq4BSNU1ZSdDfgeZtGrMTbeSgHRQ0X6B%2BFaWyK6T%2BOFQs3ghiL%2FN7TCNfA%2BbNqQsSmDW7fv3%2B2K8HI53RqHYxV4eLP1JB%2BroS74sbj1635Bv964ZeRFX%2FzyAjLig0FA6u6mkG5%2FDZWdSVuni64O9FQaxB4HMwmUKsKm171zb&Expires=1697029011';
 
-d3.json(globeatnightURL).then(createMarkers);
+d3.json(globeatnightURL).then(createLayers);
 
-function createMap(skymarkers){
+function createMap(skymarkers, heatMap){
 let streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 });
@@ -12,7 +12,8 @@ let baseMaps = {
   };
 
   let overlayMaps = {
-    "Data Sites": skymarkers
+    "Data Sites": skymarkers,
+    'Heat Map': heatMap
   };
 
   let map = L.map("map", {
@@ -26,14 +27,16 @@ let baseMaps = {
   }).addTo(map);
 }
 
-function createMarkers(response) {
+function createLayers(response) {
     let myMarkers = [];
-  
-    for (let i = 0; i < 1000; i++) {
+    let heatArray = [];
+
+    for (let i = 0; i < (response.length)/3; i++) {
       let event = response[i];
       let myMark = L.marker([event.Latitude, event.Longitude]);
       myMarkers.push(myMark);
+      heatArray.push([event.Latitude, event.Longitude]);
     }
-  
-    createMap(L.layerGroup(myMarkers));
+    
+    createMap(L.layerGroup(myMarkers), L.heatLayer(heatArray));
   }
