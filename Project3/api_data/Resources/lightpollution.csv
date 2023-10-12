@@ -1,9 +1,5 @@
 ObsDateTime,Latitude,Longitude,Elevation,LimitingMag,Constellation,Country
 2022-12-22 21:00:00+00:00,-28.86906800775399,153.5914206055468,3.86,0,Orion,Australia
-2022-12-05 19:45:00+00:00,0.0,0.0,0.0,0,Orion,United States - Alabama
-2022-11-21 22:06:00+00:00,0.0,0.0,0.0,3,Orion,United States - Pennsylvania
-2022-12-03 20:18:00+00:00,0.0,0.0,0.0,1,Orion,United States - Pennsylvania
-2022-05-11 20:03:00+00:00,0.0,0.0,0.0,2,Orion,Italy
 2022-12-29 20:20:00+00:00,16.175590857262577,80.69856173551527,11.41,4,Orion,India
 2022-09-16 20:48:00+00:00,-31.75619625757134,-55.9588623046875,156.31,3,Orion,Uruguay
 2022-11-21 20:45:00+00:00,31.33409406268104,-109.5212115221496,1249.21,0,Canis Major,United States - Arizona
