@@ -25,9 +25,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-11-21 19:00:00+00:00,31.332813068434938,-109.1320114463411,1255.74,0,Canis Major,United States - Arizona
 2022-06-23 00:24:00+00:00,34.41607269285474,-119.67828188784856,6.05,5,Canis Major,United States - California
 2022-12-24 11:32:00+00:00,37.6387,-106.658,2583.7,5,Pegasus,United States - Colorado
-2022-09-29 20:30:00+00:00,20.2175,-155.845,375.029,4,Cygnus,United States - Hawaii
-2022-09-27 20:37:00+00:00,20.2175,-155.845,375.226,5,Cygnus,United States
-2022-08-29 04:16:00+00:00,20.2175,-155.845,375.528,6,Cygnus,United States
 2022-12-11 20:16:00+00:00,33.8734,-115.901,793.8,4,Perseus,United States - Indiana
 2022-11-23 18:55:00+00:00,45.1155,-93.489,285.184,5,Pegasus,United States - Minnesota
 2022-10-22 20:35:00+00:00,45.1155,-93.489,285.184,5,Cygnus,United States - Minnesota
@@ -297,7 +294,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-10-17 16:00:00+00:00,38.7976,-94.5031,311.404,5,Pegasus,United States - Missouri
 2022-11-17 15:58:00+00:00,39.5284,-104.897,1841.9,2,Pegasus,United States - Colorado
 2022-12-03 17:45:00+00:00,45.038,-93.3866,285.418,2,Pegasus,United States - Minnesota
-2022-12-03 22:52:00+00:00,-52.0525,-125.0,-3456.93,2,Grus,United States - Arizona
 2022-10-23 10:24:00+00:00,33.2559,-116.375,247.008,5,Pegasus,United States - California
 2022-10-23 10:24:00+00:00,33.2559,-116.375,247.008,5,Pegasus,United States - California
 2022-12-02 14:17:00+00:00,39.9061,-74.9015,22.1928,1,Pegasus,United States - New Jersey
@@ -335,7 +331,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-11-19 14:59:00+00:00,41.4749,-82.1425,184.33,4,Pegasus,United States
 2022-11-18 14:53:00+00:00,41.4749,-82.1425,184.33,2,Pegasus,United States
 2022-12-01 01:06:00+00:00,29.9269,-90.1275,2.18668,2,Pegasus,United States - Louisiana
-2022-12-01 05:43:00+00:00,19.7216,-155.085,3.28572,1,Pegasus,United States - Hawaii
 2022-12-01 13:40:00+00:00,30.5169,-86.4822,12.1768,2,Pegasus,United States - Florida
 2022-12-01 10:52:00+00:00,32.1975,-110.827,812.324,3,Pegasus,United States - Arizona
 2022-12-01 10:52:00+00:00,32.254,-110.974,724.403,3,Pegasus,United States - Arizona
@@ -364,9 +359,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-11-06 15:26:00+00:00,42.6277,-71.1671,36.2501,2,Pegasus,United States - Massachusetts
 2022-11-06 12:04:00+00:00,45.1498,-93.3419,265.83,2,Pegasus,United States - Minnesota
 2022-11-05 23:02:00+00:00,37.9979,-105.699,2428.82,6,Pegasus,United States - Colorado
-2022-11-06 21:07:00+00:00,45.1277,14.1121,276.998,3,Pegasus,United States - Minnesota
-2022-11-06 21:07:00+00:00,45.1277,14.1121,276.998,3,Pegasus,United States - Minnesota
-2022-11-06 21:07:00+00:00,45.1277,14.1121,276.998,3,Pegasus,United States - Minnesota
 2022-09-24 18:45:00+00:00,43.6289,-70.5126,60.4897,4,Cygnus,United States - Maine
 2022-10-27 18:18:00+00:00,41.7612,-70.7041,4.62598,4,Pegasus,United States
 2022-11-05 20:20:00+00:00,38.734,-82.9865,161.838,1,Pegasus,United States - Ohio
@@ -381,7 +373,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-11-05 15:18:00+00:00,40.0809,-74.5304,35.3198,3,Pegasus,United States - New Jersey
 2022-11-04 17:22:00+00:00,44.9696,-93.2412,251.761,2,Pegasus,United States - Minnesota
 2022-11-05 05:54:00+00:00,42.4566,-83.4353,262.964,1,Pegasus,United States - Michigan
-2022-11-05 11:26:00+00:00,45.0916,14.1238,230.275,1,Pegasus,United States - Colorado
 2022-11-04 11:51:00+00:00,33.6819,-112.392,397.805,2,Pegasus,United States
 2022-11-04 15:25:00+00:00,42.6275,-71.1667,36.3014,2,Pegasus,United States
 2022-11-04 14:34:00+00:00,41.4573,-81.9515,210.631,1,Pegasus,United States - Ohio
@@ -755,11 +746,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-10-26 00:55:00+00:00,45.1498,-93.3419,265.83,1,Pegasus,United States - Minnesota
 2022-10-26 00:55:00+00:00,45.1498,-93.3419,265.83,1,Pegasus,United States - Minnesota
 2022-10-24 13:25:00+00:00,38.65,-90.425,179.716,2,Pegasus,United States - Missouri
-2022-10-26 21:46:00+00:00,41.3441,21.5528,651.509,3,Pegasus,United States - California
-2022-10-26 22:36:00+00:00,41.3441,21.5528,651.509,3,Pegasus,United States - California
-2022-10-26 22:36:00+00:00,41.3437,21.5485,649.756,1,Pegasus,United States - California
-2022-10-26 22:08:00+00:00,41.3441,21.5528,651.509,3,Pegasus,United States - California
-2022-10-26 22:08:00+00:00,41.3441,21.5528,651.509,3,Pegasus,United States - California
 2022-10-25 17:00:00+00:00,29.8725,-98.6307,391.147,5,Pegasus,United States - Texas
 2022-10-25 05:32:00+00:00,40.8085,-77.8555,355.993,1,Pegasus,United States - Pennsylvania
 2022-10-25 15:10:00+00:00,32.2433,-106.827,1240.63,5,Pegasus,United States - New Mexico
@@ -1358,7 +1344,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-09-30 22:48:00+00:00,37.9976,-105.699,2426.6,7,Pegasus,United States - Colorado
 2022-09-30 18:28:00+00:00,38.888,-119.819,1461.36,4,Pegasus,United States - Nevada
 2022-09-26 17:35:00+00:00,32.0828,-96.5023,149.556,3,Cygnus,United States - Texas
-2022-09-30 10:19:00+00:00,21.393,-157.75,1.0,4,Cygnus,United States - Hawaii
 2022-09-30 16:21:00+00:00,37.9978,-105.699,2427.08,6,Cygnus,United States - Colorado
 2022-09-30 13:41:00+00:00,47.6725,-122.921,166.964,6,Cygnus,United States - Washington
 2022-09-26 17:35:00+00:00,32.0828,-96.5023,149.556,3,Cygnus,United States - Texas
@@ -2327,7 +2312,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-07-15 12:33:00+00:00,25.7717,-80.1703,2.05019,1,Hercules,United States - Florida
 2022-07-14 19:20:00+00:00,39.0558,-76.4988,25.4229,2,Hercules,United States - Maryland
 2022-01-31 15:17:00+00:00,34.0576,-84.0644,322.082,3,Orion,United States - Georgia
-2022-07-13 10:41:00+00:00,21.3116,-158.034,5.0,2,Hercules,United States - Hawaii
 2022-07-12 05:30:00+00:00,35.4799,-79.1803,108.788,2,Hercules,United States - North Carolina
 2022-06-26 17:15:00+00:00,43.3319,-71.1156,405.027,4,Hercules,United States - New Hampshire
 2022-07-12 17:20:00+00:00,39.1071,-76.7969,56.337,4,Hercules,United States - Maryland
@@ -2339,7 +2323,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-07-03 18:57:00+00:00,39.246,-85.8877,196.349,3,Hercules,United States - Indiana
 2022-07-10 18:15:00+00:00,40.6421,-78.1707,310.835,3,Hercules,United States - Pennsylvania
 2022-07-10 20:51:00+00:00,39.0558,-76.4988,25.4229,2,Hercules,United States - Maryland
-2022-07-09 16:23:00+00:00,21.9041,-159.594,3.29269,3,Hercules,United States - Hawaii
 2022-07-09 19:53:00+00:00,35.5437,-120.722,266.594,6,Hercules,United States - California
 2022-07-09 18:52:00+00:00,47.8825,-122.249,174.679,5,Hercules,United States - Washington
 2022-07-09 18:52:00+00:00,47.8825,-122.249,174.679,5,Hercules,United States - Washington
@@ -2642,7 +2625,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-06-04 17:09:00+00:00,29.9919,-81.6781,4.87774,3,Hercules,United States - Florida
 2022-06-04 17:09:00+00:00,29.9919,-81.6781,4.87774,3,Hercules,United States - Florida
 2022-06-03 17:05:00+00:00,29.9919,-81.6781,4.87774,1,Hercules,United States - Florida
-2022-06-05 04:55:00+00:00,-28.3044,-56.375,70.7589,3,Scorpius,United States - Alaska
 2022-06-03 17:05:00+00:00,29.9919,-81.6781,4.87774,1,Hercules,United States - Florida
 2022-06-02 17:19:00+00:00,29.9919,-81.6781,4.87774,2,Hercules,United States - Florida
 2022-05-30 15:30:00+00:00,47.2211,-122.405,66.8925,2,Bootes,United States - Washington
@@ -3312,7 +3294,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-04-28 18:59:00+00:00,40.8063,-77.869,363.984,4,Leo,United States - Pennsylvania
 2022-04-28 18:58:00+00:00,40.8066,-77.8615,359.083,1,Leo,United States - Pennsylvania
 2022-04-28 18:53:00+00:00,40.8115,-77.8593,350.423,5,Leo,United States - Pennsylvania
-2022-04-28 18:54:00+00:00,67.6092,143.594,70.9368,2,Leo,United States - Pennsylvania
 2022-04-28 18:52:00+00:00,39.9508,-74.2313,9.88753,2,Leo,United States - New Jersey
 2022-04-28 18:15:00+00:00,42.2432,-77.0432,465.742,3,Leo,United States - New York
 2022-04-28 18:43:00+00:00,40.1116,-75.0284,66.5679,3,Leo,United States - Pennsylvania
@@ -4630,7 +4611,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-03-03 14:55:00+00:00,42.4665,-75.0608,406.096,3,Orion,United States - New York
 2022-03-03 12:00:00+00:00,47.1539,-122.138,205.236,2,Orion,United States - Washington
 2022-03-02 13:56:00+00:00,47.2248,-122.49,96.915,1,Orion,United States
-2022-03-03 17:19:00+00:00,19.7241,-155.087,6.28773,3,Orion,United States - Hawaii
 2022-03-01 14:25:00+00:00,30.6707,-96.3158,89.1614,3,Orion,United States - Texas
 2022-03-03 14:24:00+00:00,30.6951,-96.3305,96.7542,4,Orion,United States - Texas
 2022-01-04 13:25:00+00:00,30.6707,-96.3158,89.1614,3,Orion,United States - Texas
@@ -5264,7 +5244,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-02-06 15:44:00+00:00,40.7362,-80.131,365.086,3,Orion,United States - Pennsylvania
 2022-02-06 15:13:00+00:00,42.4688,-75.0652,433.141,5,Orion,United States - New York
 2022-01-31 18:28:00+00:00,40.3423,-104.933,1495.94,3,Orion,United States
-2022-02-06 09:29:00+00:00,21.393,-157.75,1.0,4,Orion,United States - Hawaii
 2022-02-06 13:25:00+00:00,31.2331,-90.4567,123.712,6,Orion,United States - Mississippi
 2022-02-06 16:25:00+00:00,32.2839,-106.912,1351.7,4,Orion,United States - New Mexico
 2022-02-06 15:01:00+00:00,31.3356,-89.3067,52.8384,1,Orion,United States - Mississippi
@@ -5464,7 +5443,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-02-01 13:25:00+00:00,33.4163,-86.9055,183.857,3,Orion,United States - Alabama
 2022-02-01 15:00:00+00:00,35.6153,-82.5682,633.811,3,Orion,United States - North Carolina
 2022-02-01 13:48:00+00:00,33.4508,-86.7329,231.091,1,Orion,United States - Alabama
-2022-02-01 13:50:00+00:00,-24.5271,-15.4531,-3685.81,1,Orion,United States - Alabama
 2022-02-01 15:45:00+00:00,35.9937,-75.6607,4.31176,5,Orion,United States - North Carolina
 2022-01-31 10:37:00+00:00,47.2143,-124.205,37.0352,1,Orion,United States - Washington
 2022-02-01 14:58:00+00:00,39.5858,-77.0032,239.823,2,Orion,United States - Maryland
@@ -5563,7 +5541,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-01-30 14:17:00+00:00,34.0842,-86.4269,236.47,3,Orion,United States - Alabama
 2022-01-29 16:15:00+00:00,35.573,-121.051,41.5844,6,Orion,United States - California
 2022-01-29 14:49:00+00:00,33.5337,-86.7752,190.546,3,Orion,United States - Alabama
-2022-01-31 20:06:00+00:00,45.7605,15.9796,111.431,1,Orion,United States - Arkansas
 2022-01-30 13:03:00+00:00,33.4917,-86.7955,292.237,2,Orion,United States - Alabama
 2022-01-30 14:00:00+00:00,47.2632,-122.27,110.299,3,Orion,United States - Washington
 2022-01-28 16:26:00+00:00,33.5253,-86.7267,226.276,2,Orion,United States - Alabama
@@ -5930,7 +5907,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-01-21 16:43:00+00:00,41.417,-81.4568,372.441,3,Orion,United States - Ohio
 2022-01-24 15:22:00+00:00,35.3307,-111.706,2908.36,6,Orion,United States - Arizona
 2022-01-24 14:37:00+00:00,46.6299,-91.6009,272.762,5,Orion,United States - Wisconsin
-2022-01-25 15:00:00+00:00,-6.52526,-16.7118,-3973.75,4,Orion,United States - Colorado
 2022-01-24 13:29:00+00:00,35.1983,-111.651,2103.93,5,Orion,United States - Arizona
 2022-01-24 15:47:00+00:00,35.8492,-78.849,96.3299,3,Orion,United States - North Carolina
 2022-01-22 17:53:00+00:00,42.293,-71.2911,35.306,2,Orion,United States - Massachusetts
@@ -6007,7 +5983,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-01-15 20:07:00+00:00,41.4935,-81.5492,306.188,3,Orion,United States - Ohio
 2022-01-15 13:01:00+00:00,41.6824,-87.9755,178.849,1,Orion,United States - Illinois
 2022-01-14 19:29:00+00:00,41.3985,-73.4171,127.18,3,Orion,United States - Connecticut
-2022-01-13 09:38:00+00:00,21.393,-157.75,1.0,3,Orion,United States - Hawaii
 2022-01-13 18:50:00+00:00,39.0558,-76.4988,25.4229,1,Orion,United States - Maryland
 2022-01-11 15:14:00+00:00,39.4471,-77.5601,141.973,4,Orion,United States - Maryland
 2022-01-12 15:23:00+00:00,39.4527,-77.5242,238.544,4,Orion,United States - Maryland
@@ -6046,7 +6021,6 @@ ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State
 2022-01-06 13:57:00+00:00,41.7388,-87.9676,211.42,2,Orion,United States - Illinois
 2022-01-04 16:35:00+00:00,29.8718,-98.6313,392.829,5,Orion,United States - Texas
 2022-01-05 18:30:00+00:00,42.6541,-71.6274,114.902,6,Orion,United States - Massachusetts
-2022-01-06 04:54:00+00:00,-33.7243,30.3906,-3846.42,3,Orion,United States - Mississippi
 2022-01-05 17:15:00+00:00,46.5956,-94.2151,380.875,2,Orion,United States - Minnesota
 2022-01-05 14:59:00+00:00,35.1667,-89.7992,108.512,3,Orion,United States - Tennessee
 2022-01-05 12:36:00+00:00,34.61,-112.316,1528.52,5,Orion,United States - Arizona
