@@ -1,5 +1,6 @@
 # Top Secret API Key File
 api_keys.py
+api_keys.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

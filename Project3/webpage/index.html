@@ -23,9 +23,7 @@
 
   <section>  
     <h1 style="font-size:50px;">Dark Sky Finder</h1>
-
     <h2>Use the interactive tools below to explore the best spots to see the night sky!</h2>
-    
     <h3>Select Your State</h3>
     <select id="selState" onchange="zoomIn(this.value)">
       <option value="AL">Alabama</option>
@@ -80,19 +78,20 @@
       <option value="WI">Wisconsin</option>
       <option value="WY">Wyoming</option>
     </select>
-    <br>
-    <br>
-      <h3 >Select a Date</h3>
-      <form>
-        <label for="when">When do you want to go?</label><br>
-        <input type="date" id="when" name="when"><br>
-      </form>
-  <br><br>
-</section>
+    <br><br>
+  </section>
 
 
   <!-- The div that holds our map -->
   <div id="map"></div>
+
+  <section>
+    <h3 >Select a Date</h3>
+    <form>
+      <label for="when">When do you want to go?</label><br>
+      <input type="date" id="when" name="when"><br>
+    </form>
+  </section>
 
   <!-- The div that holds our Chart.js stuff -->
   <div> <canvas id="myChart"></canvas> </div>
@@ -112,6 +111,7 @@
 
   <!-- Our JavaScript -->
   <script type="text/javascript" src="static/js/logic.js"></script>
+  <script type="text/javascript" src="static/js/api_keys.js"></script>
 
 </body>
 
