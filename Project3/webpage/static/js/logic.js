@@ -61,6 +61,7 @@ d3.csv(moonphase_path).then(findDates);
 function findDates(response){
   console.log(response)
   labels = []
+  data = []
   for (let i = 1; i < 13; i++){
     labels.push(response.columns[i])
   }
@@ -71,7 +72,7 @@ function findDates(response){
       labels: labels,
       datasets: [{
         label: 'Moon Visibility',
-        data: [response]
+        data: data
       }]
     }
   })
