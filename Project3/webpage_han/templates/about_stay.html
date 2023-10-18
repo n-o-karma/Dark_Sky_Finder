@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data from Jupyter Notebook</title>
+
+      <!-- Our CSS -->
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+
+<body>
+    <h1>State: {{ data['state']}}</h1>
+    <p>Latitude: {{ data.latitude }}</p>
+    <p>Longitude: {{ data.longitude }}</p>
+
+    <h1>List of Hotels</h1>
+    <ul>
+        {% for hotel in data.stay_data %}
+          <li>{{ hotel }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h1>Moon data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Moon Illumination</th>
+                <th>Moon Phase</th>
+            </tr>
+        </thead>
+        <tbody id="moonDataBody"></tbody>
+    </table>
+
+    <script>
+        const moonDataList = {{ data['moon_data'] | safe }};
+        const moonDataBody = document.getElementById('moonDataBody');
+
+        moonDataList.forEach(data => {
+            const newRow = document.createElement('tr');
+            Object.values(data).forEach(value => {
+                const newCell = document.createElement('td');
+                newCell.appendChild(document.createTextNode(value));
+                newRow.appendChild(newCell);
+            });
+            moonDataBody.appendChild(newRow);
+        });
+    </script>
+
+    <h1>cloud forecasting</h1>
+    <table id="weather-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Low Cloud Cover Mean</th>
+                <th>Medium Cloud Cover Mean</th>
+                <th>High Cloud Cover Mean</th>
+                <th>Effective Cloud Cover Mean</th>
+                <th>Total Cloud Cover Mean</th>
+            </tr>
+        </thead>
+        <tbody id="weatherDataBody"></tbody>
+    </table>
+
+    <!-- Add your JavaScript code to populate the table -->
+    <script>
+        const combinedJson = {{ data['weather_data'] | safe }};
+        const weatherDataBody = document.getElementById('weatherDataBody');
+        
+        // Extract the data and populate the table
+        combinedJson.index.forEach((date, index) => {
+            const newRow = document.createElement('tr');
+            newRow.insertCell().appendChild(document.createTextNode(date));
+            combinedJson.data[index].forEach(value => {
+                const newCell = document.createElement('td');
+                newCell.appendChild(document.createTextNode(value));
+                newRow.appendChild(newCell);
+            });
+            weatherDataBody.appendChild(newRow);
+        });
+
+        
+        const rows = document.querySelectorAll("#weatherDataBody tr");
+        rows.forEach(row => {
+        const cloudCover = parseInt(row.cells[5].textContent); // Adjust the index if necessary
+        if (!isNaN(cloudCover) && cloudCover <= 10) {
+            row.classList.add("highlight");
+        }
+    });
+
+    </script>
+    
+    <script>
+        const rows = document.querySelectorAll("tr");
+        rows.forEach(row => {
+            const moonIllumination = parseInt(row.cells[1].textContent);
+            if (moonIllumination <= 10) {
+                row.classList.add("highlight");
+            }
+        });
+    </script>
+     
+</body>
+
+</html>
