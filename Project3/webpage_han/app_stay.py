@@ -9,11 +9,10 @@ from US_states_data import states
 # Import the API key
 from config import geoapify_key
 
-
 app = Flask(__name__)
 current_date = dt.datetime.now().strftime("%Y-%m-%d")
 
-# Define function to fild location of one place in the selected state
+# Define function to find location of one place in the selected state
 def get_coordinates(selected_state):
     #target_location = f"center of {selected_state}"
     target_url = f"https://api.geoapify.com/v1/geocode/search?text={selected_state}&format=json&apiKey={geoapify_key}"
@@ -31,11 +30,6 @@ def get_coordinates(selected_state):
 # moon data : phase of moon
 # moon_URL = f'https://aa.usno.navy.mil/api/moon/phases/date?date={current_date}&nump=50'
 def moon_data(lat,lon):
-
-    # moon_phases = requests.get(moon_URL).json()
-    # # Filter the data for the year 2023
-    # filtered_data = [phase for phase in moon_phases['phasedata'] if phase['year'] == 2023]
-    # return filtered_data
     time_str = "00:00"
     moon_data_list = []
     for i in range(11):
@@ -69,7 +63,7 @@ def weather_data(lat,lon):
     #format = 'html'
     optionals = 'source=mix'
 
-    # comment out and input our own id and pwd for access to https://api.meteomatics.com
+    # comment out and input your own id and pwd for access to https://api.meteomatics.com
     #username = 'YOUR ID'
     #password = 'YOUR PASSWORD'
 
