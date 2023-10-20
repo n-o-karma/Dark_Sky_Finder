@@ -98,9 +98,9 @@ let css_style = {
   blur:10,
   lightColour: '#fff0b1'};
 let mooncontainer = document.getElementById("moondrawing")
-let moonphases = [];
 
 // Temp list of moonphases for testing
+let moonphases = [];
 let nextmoonphases = [{'date': '2023-10-18', 'moon_illumination': '', 'moon_phase': ''},
   {'date': '2023-10-19',
    'moon_illumination': 18,
@@ -133,13 +133,17 @@ moondrawing(nextmoonphases);
 
 
 function moondrawing(nextmoonphases) {
-  let header = d3.select(".moonheader");
-  let content = d3.select(".moondata").append("tr");
+  let header = d3.select(".moonheaders");
+  let content = d3.select(".moondata");
+  let drawings = d3.select(".moondrawing")
   for (let i = 1; i<nextmoonphases.length; i++ ) {
     let newshadow = nextmoonphases[i].moon_illumination/100;
+
     moonphases.push(newshadow);
-    let dateheaders = header.append("th").text(nextmoonphases[i].date);
-    //let moonphases = content.append("td").text(newshadow)
+    // drawPlanetPhase(document.getElementById("moondrawing"), moonshadow, waxing, css_style)
+    header.append("th").text(nextmoonphases[i].date);
+    content.append("td").text(nextmoonphases[i].moon_phase);
+    drawings.append("td").attr("id", `phase_${i-1}`).text(`${i}`)
   }
   console.log(moonphases);
   //drawPlanetPhase(mooncontainer, moonshadow, waxing, css_style);

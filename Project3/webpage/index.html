@@ -100,18 +100,14 @@
 
    <!-- Moon phases section -->
   <section>
-    <h2>Here are the moon phases</h2>
+    <h2>Here is the moon library</h2>
+    <canvas></canvas>
     <table class="moontable">
-      <thead class="moonheader">
-        <tr>
-        </tr>
-      </thead>
-      <tbody class="moondata">
-        <tr>
-        </tr>
-      </tbody>
+        <tr class="moonheaders"></tr>
+        <tr class="moondata"></tr>
+        <tr class="moondrawing"></tr>
     </table>
-    <div id="moondrawing"></div>
+    <div></div>
   </section>
 
   <div>
@@ -129,7 +125,6 @@
     </table>
   </div>
   
-
   <!-- Chart.js JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Leaflet JavaScript -->
@@ -152,7 +147,11 @@
 <!-- Moon Shadow Library Call -->
 <script src="static/js/planet_phase.js"></script>
 <script>
-  drawPlanetPhase(mooncontainer, moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_0"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_1"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_2"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_3"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_4"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_5"), moonshadow, waxing, css_style)
 </script>
-
 </html>
