@@ -1,4 +1,4 @@
-let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv'
+let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
 
 function createLayers(response) {
@@ -11,27 +11,29 @@ function createLayers(response) {
       let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `);
       myMarkers.push(myMark);
       heatArray.push([event.Latitude, event.Longitude]);
-    }
-  }
-
-    let overlayMaps = {
-      "Data Sites": L.layerGroup(myMarkers),
-      'Heat Map': L.heatLayer(heatArray,{minOpacity:0.35,maxZoom:10})
     };
-    L.control.layers(baseMaps,overlayMaps, {
-      collapsed: false
-    }).addTo(map);
-}
+  };
 
-let Stadia_AlidadeSmoothDark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
-	minZoom: 0,
-	maxZoom: 20,
-	attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-	ext: 'png'
-}
-);
+  let overlayMaps = {
+    "Data Sites": L.layerGroup(myMarkers),
+    'Heat Map': L.heatLayer(heatArray,{minOpacity:0.35,maxZoom:10})
+  };
+  L.control.layers(baseMaps,overlayMaps, {
+    collapsed: false
+  }).addTo(map);
 
-var NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
+  fetch('static/js/gz_2010_us_040_00_500k.json').then((response2) => response2.json()).then(function makeStates(json){
+    for (feature of json.features){
+      L.geoJSON(feature.geometry).addTo(map)
+    };
+  });
+};
+
+let Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+let NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
 	attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
 	bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
 	minZoom: 1,
@@ -44,11 +46,12 @@ var NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nas
 let map = L.map("map", {
   center: [37.0902, -95.7129],
   zoom: 4,
-  layers: [NASAGIBS_ViirsEarthAtNight2012]
+  layers: [Esri_WorldImagery]
 });
 
 let baseMaps = {
-  "Street Map": NASAGIBS_ViirsEarthAtNight2012
+  "Terrain": Esri_WorldImagery,
+  "Light Sources":NASAGIBS_ViirsEarthAtNight2012
 };
 
 function zoomIn(state){
@@ -61,10 +64,10 @@ function zoomIn(state){
         stateCoords = [item.properties.lat, item.properties.lon]
         map.flyTo(stateCoords,6)
       }
-      else{break}
-    }
-  }
-}
+      else{break};
+    };
+  };
+};
 
 let moonphase_path = '../api_data/Resources/moon_phases.csv'
 d3.csv(moonphase_path).then(findDates);
