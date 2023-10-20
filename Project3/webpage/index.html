@@ -14,6 +14,7 @@
 
   <!-- Our CSS -->
   <link rel="stylesheet" type="text/css" href="static/css/style.css">
+
 </head>
 
 <body>
@@ -93,9 +94,42 @@
     </form>
   </section>
 
+
   <!-- The div that holds our Chart.js stuff -->
   <div> <canvas id="myChart"></canvas> </div>
+
+   <!-- Moon phases section -->
+  <section>
+    <h2>Here are the moon phases</h2>
+    <table class="moontable">
+      <thead class="moonheader">
+        <tr>
+        </tr>
+      </thead>
+      <tbody class="moondata">
+        <tr>
+        </tr>
+      </tbody>
+    </table>
+    <div id="moondrawing"></div>
+  </section>
+
+  <div>
+    <table class="travelinfo-table">
+      <thead>
+        <tr>
+          <th><h2>Cloudiness</h2></th>
+          <th><h2>Hotels near</h2></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   
+
   <!-- Chart.js JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Leaflet JavaScript -->
@@ -114,5 +148,11 @@
   <script type="text/javascript" src="static/js/api_keys.js"></script>
 
 </body>
+
+<!-- Moon Shadow Library Call -->
+<script src="static/js/planet_phase.js"></script>
+<script>
+  drawPlanetPhase(mooncontainer, moonshadow, waxing, css_style)
+</script>
 
 </html>
