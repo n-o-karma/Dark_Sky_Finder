@@ -69,11 +69,16 @@ function zoomIn(state){
   };
 };
 
+function selDate(date){
+  console.log(date)
+  let area = document.getElementById('dates')
+  area.scrollIntoView({behavior:"smooth"})
+}
+
 let moonphase_path = '../api_data/Resources/moon_phases.csv'
 d3.csv(moonphase_path).then(findDates);
 
 function findDates(response){
-  //console.log(response)
   labels = []
   data = []
   for (let i = 1; i < 13; i++){

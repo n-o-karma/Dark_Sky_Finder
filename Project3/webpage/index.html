@@ -22,10 +22,11 @@
 <!-- Star animation -->
   <div class="main"></div>
 
-  <section>  
+  <section id="states">  
     <h1 style="font-size:50px;">Dark Sky Finder</h1>
     <h2>Use the interactive tools below to explore the best spots to see the night sky!</h2>
-    <h3>Select Your State</h3>
+    
+    <h3>Select a State</h3>
     <select id="selState" onchange="zoomIn(this.value)">
       <option value="AL">Alabama</option>
       <option value="AK">Alaska</option>
@@ -79,35 +80,45 @@
       <option value="WI">Wisconsin</option>
       <option value="WY">Wyoming</option>
     </select>
-    <br><br>
+    <br>  <br>
   </section>
 
 
   <!-- The div that holds our map -->
   <div id="map"></div>
 
-  <section>
-    <h3 >Select a Date</h3>
+  <br>  <br>
+  <br>  <br>
+
+  <section id="dates">
     <form>
-      <label for="when">When do you want to go?</label><br>
-      <input type="date" id="when" name="when"><br>
+      <label for="when">Select a Date</label>
+      <br>
+      <input type="date" id="when" name="when" onchange="selDate(this.value)">
+      <!-- <p><button onclick="selDate(this.value)">Submit </button></p> -->
+      <br>
     </form>
   </section>
 
-
-  <!-- The div that holds our Chart.js stuff -->
-  <div> <canvas id="myChart"></canvas> </div>
-
+  
    <!-- Moon phases section -->
   <section>
-    <h2>Here is the moon library</h2>
-    <canvas></canvas>
+    <h2>Check below to see the best times to go!</h2>
+
     <table class="moontable">
         <tr class="moonheaders"></tr>
         <tr class="moondata"></tr>
         <tr class="moondrawing"></tr>
     </table>
+
     <div></div>
+
+  <br>  <br>
+  <br>  <br>
+  <br>  <br>
+  <br>  <br>
+  <br>  <br>  
+
   </section>
 
   <div>
@@ -115,7 +126,7 @@
       <thead>
         <tr>
           <th><h2>Cloudiness</h2></th>
-          <th><h2>Hotels near</h2></th>
+          <th><h2>Where to stay</h2></th>
         </tr>
       </thead>
       <tbody>
@@ -123,6 +134,10 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div>
+    <canvas id="myChart"></canvas>
   </div>
   
   <!-- Chart.js JavaScript -->
@@ -153,5 +168,8 @@
   drawPlanetPhase(document.getElementById("phase_3"), moonshadow, waxing, css_style)
   drawPlanetPhase(document.getElementById("phase_4"), moonshadow, waxing, css_style)
   drawPlanetPhase(document.getElementById("phase_5"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_6"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_7"), moonshadow, waxing, css_style)
+  drawPlanetPhase(document.getElementById("phase_8"), moonshadow, waxing, css_style)
 </script>
 </html>
