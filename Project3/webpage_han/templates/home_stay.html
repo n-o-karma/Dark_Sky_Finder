@@ -27,7 +27,7 @@
     <h2>Use the interactive tools below to explore the best spots to see the night sky!</h2>
     
     <h3>Select Your State</h3>
-    <select id="selState" onchange="zoomIn(this.value)">
+    <select id="selState" onchange="onStateSelectChange(this.value)">
       {% for state in states %}
       <option value="{{ state['value'] }}">{{ state['name'] }}</option>
       {% endfor %}

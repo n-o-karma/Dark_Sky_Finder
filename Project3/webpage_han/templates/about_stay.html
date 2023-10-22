@@ -4,104 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data from Jupyter Notebook</title>
+    <title>Moon and cloud prediction</title>
 
-      <!-- Our CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
+
+    <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <style>
+        .accommodation {
+            margin-left: 20px; /* Adjust the value as needed */
+        }
+    </style>
+
 </head>
 
 <body>
-    <h1>State: {{ data['state']}}</h1>
-    <p>Latitude: {{ data.latitude }}</p>
-    <p>Longitude: {{ data.longitude }}</p>
+    <h1 class="accommodation"> {{ data['state']}}</h1>
+    <!-- <p>Latitude: {{ data.latitude }}</p>
+    <p>Longitude: {{ data.longitude }}</p> -->
 
-    <h1>List of Hotels</h1>
-    <ul>
+    <h2 class="accommodation">List of accommodations</h2>
+    <ul class="accommodation">
         {% for hotel in data.stay_data %}
-          <li>{{ hotel }}</li>
+          <li>{{ hotel.name }}</li>
         {% endfor %}
     </ul>
+<div class="container">
+    <div id="table-section">
+        <h2>Moon condition and Cloud condition</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Moon Illumination</th>
+                    <th>Moon Phase</th>
+                    <th>Total cloud cover (mean)</th>
+                </tr>
+            </thead>
+            <tbody id="moonDataBody"></tbody>
+        </table>
+
+        <!-- <script type="text/javascript" src="static/js/logic1.js"></script>  -->
+
+        <!-- Make table of moon and cloud condition for 10 days from today -->
+        <script>
+            const moonDataList = {{ data['moon_weather_data'] | safe }};
+            const moonDataBody = document.getElementById('moonDataBody');
+            moonDataList.data.forEach(row => {
+                const newRow = document.createElement('tr');
+                row.forEach(value => {
+                    const newCell = document.createElement('td');
+                    newCell.appendChild(document.createTextNode(value));
+                    newRow.appendChild(newCell);
+                });
+                moonDataBody.appendChild(newRow);
+            });
+        </script>
+        
+        <!-- Highlight when moon illumination <=10 and cloud cover <= 10 -->
+        <script type="text/javascript" src="static/js/logic2.js"></script>
+    </div>
     
-    <h1>Moon data</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Moon Illumination</th>
-                <th>Moon Phase</th>
-            </tr>
-        </thead>
-        <tbody id="moonDataBody"></tbody>
-    </table>
 
-    <script>
-        const moonDataList = {{ data['moon_data'] | safe }};
-        const moonDataBody = document.getElementById('moonDataBody');
+    <!-- Display the map section -->
+    <div id="map-section" style="height: 600px; width: 50%;">
 
-        moonDataList.forEach(data => {
-            const newRow = document.createElement('tr');
-            Object.values(data).forEach(value => {
-                const newCell = document.createElement('td');
-                newCell.appendChild(document.createTextNode(value));
-                newRow.appendChild(newCell);
+        <!-- <script type="text/javascript" src="static/js/logic3.js"></script>    -->
+
+         <!-- Create and configure your Leaflet map instance -->
+        <script>
+        let myMap = L.map("map-section").setView([{{ data['latitude'] | safe }}, {{ data['longitude'] | safe }}], 8);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(myMap);
+        </script>
+         <!-- Access the stay_data passed from your Flask route -->
+        <script>
+        var stayData = {{ data['stay_data'] | tojson | safe }};        
+        for (let stay of stayData) {
+            let marker = L.marker([stay.latitude, stay.longitude]).addTo(myMap);
+              marker.on('click', function () {
+            let popup = L.popup()
+                .setLatLng([stay.latitude, stay.longitude])
+                .setContent(`<b>${stay.name}</b>`)
+                .openOn(myMap);
             });
-            moonDataBody.appendChild(newRow);
-        });
-    </script>
-
-    <h1>cloud forecasting</h1>
-    <table id="weather-table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Low Cloud Cover Mean</th>
-                <th>Medium Cloud Cover Mean</th>
-                <th>High Cloud Cover Mean</th>
-                <th>Effective Cloud Cover Mean</th>
-                <th>Total Cloud Cover Mean</th>
-            </tr>
-        </thead>
-        <tbody id="weatherDataBody"></tbody>
-    </table>
-
-    <!-- Add your JavaScript code to populate the table -->
-    <script>
-        const combinedJson = {{ data['weather_data'] | safe }};
-        const weatherDataBody = document.getElementById('weatherDataBody');
-        
-        // Extract the data and populate the table
-        combinedJson.index.forEach((date, index) => {
-            const newRow = document.createElement('tr');
-            newRow.insertCell().appendChild(document.createTextNode(date));
-            combinedJson.data[index].forEach(value => {
-                const newCell = document.createElement('td');
-                newCell.appendChild(document.createTextNode(value));
-                newRow.appendChild(newCell);
-            });
-            weatherDataBody.appendChild(newRow);
-        });
-
-        
-        const rows = document.querySelectorAll("#weatherDataBody tr");
-        rows.forEach(row => {
-        const cloudCover = parseInt(row.cells[5].textContent); // Adjust the index if necessary
-        if (!isNaN(cloudCover) && cloudCover <= 10) {
-            row.classList.add("highlight");
         }
-    });
+        </script>
+    </div> 
+</div> 
+<style>
+    .container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
 
-    </script>
-    
-    <script>
-        const rows = document.querySelectorAll("tr");
-        rows.forEach(row => {
-            const moonIllumination = parseInt(row.cells[1].textContent);
-            if (moonIllumination <= 10) {
-                row.classList.add("highlight");
-            }
-        });
-    </script>
-     
-</body>
+    #table-section {
+        flex: 1;
+    }
+
+    #map-section {
+        flex: 1;
+    }
+</style>
+</body> 
 
 </html>

@@ -58,3 +58,18 @@ body,
 html {
   height: 100%;
 }
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+  margin-left: 50px
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+.highlight {
+  background-color: white;
+}

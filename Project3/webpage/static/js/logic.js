@@ -54,20 +54,103 @@ let baseMaps = {
   "Light Sources":NASAGIBS_ViirsEarthAtNight2012
 };
 
-function zoomIn(state){
-  let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
-  d3.json(geoapify_url).then(stateZoom)
+function getStateCoordinates(response, state){
+  for (item of response.features){
+    if (item.properties.state_code == state){
+      console.log(state);
+      return [item.properties.lat, item.properties.lon]
+    }
+  }
+  throw new Error("Unable to find valid state latitude and longitude");
+}
 
-  function stateZoom(response){
-    for (item of response.features){
-      if (item.properties.state_code == state){
-        stateCoords = [item.properties.lat, item.properties.lon]
-        map.flyTo(stateCoords,6)
-      }
-      else{break};
-    };
-  };
+// Make table of moon_weather_data
+function createMoonWeatherDataTable(data) {
+  resetTable();
+  addTableHeaders();
+  const moonDataBody = document.getElementById('moonDataBody');
+  data.forEach(row => {
+      console.log(row.date, row.moon_illumination, row.moon_phase); 
+      const newRow = document.createElement('tr');
+      const dateCell = document.createElement('td');
+      dateCell.appendChild(document.createTextNode(row.date));
+      newRow.appendChild(dateCell);
+
+      const illuminationCell = document.createElement('td');
+      illuminationCell.appendChild(document.createTextNode(row.moon_illumination));
+      newRow.appendChild(illuminationCell);
+
+      const phaseCell = document.createElement('td');
+      phaseCell.appendChild(document.createTextNode(row.moon_phase));
+      newRow.appendChild(phaseCell);
+
+      const cloudCell = document.createElement('td');
+      cloudCell.appendChild(document.createTextNode(row.cloud_cover));
+      newRow.appendChild(cloudCell);
+
+      moonDataBody.appendChild(newRow);
+  });
+}
+
+function onStateSelectChange(state){
+  console.log('test');
+  console.log(state);
+  console.log(typeof geoapify_key);
+  console.log('geoapify_key');
+  console.log(geoapify_key);
+  console.log('geoapify_key');
+
+
+  let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
+  
+  // d3.json(geoapify_url).then(stateZoom)
+  d3.json(geoapify_url)
+  .then(response => {
+    console.log('test2')
+    return getStateCoordinates(response, state)}
+  )
+  .then((stateCoords) => {
+    console.log('test3');
+    fetch('http://localhost:5000/api/v1.0/moon-weather-data', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+      },
+      body: JSON.stringify(stateCoords)})
+    .then(response=> response.json())
+    .then(moon_weather_data => {
+      // do stuff with moon_weather data
+      console.log(moon_weather_data);
+      const jsonData = JSON.parse(moon_weather_data);
+      console.log(jsonData);
+      console.log(typeof jsonData); 
+      createMoonWeatherDataTable(jsonData)
+    })
+    .catch(error => console.error('Error:', error));
+    
+    map.flyTo(stateCoords,6);
+  })
+  .catch(error => console.error('Error:', error));
 };
+
+// Make a table header
+function addTableHeaders() {
+  const tableHeaders = ["Date", "Moon Illumination", "Moon Phase","Cloud Cover (Total)"];
+  const headerRow = document.getElementById('tableHeaders');
+  tableHeaders.forEach(header => {
+      const th = document.createElement('th');
+      th.appendChild(document.createTextNode(header));
+      headerRow.appendChild(th);
+  });
+}
+
+// reset the table after selecting another state
+function resetTable() {
+  const moonDataBody = document.getElementById('moonDataBody');
+  while (moonDataBody.firstChild) {
+      moonDataBody.removeChild(moonDataBody.firstChild);
+  }
+}
 
 function selDate(date){
   console.log(date)

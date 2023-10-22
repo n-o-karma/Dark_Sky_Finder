@@ -27,7 +27,7 @@
     <h2>Use the interactive tools below to explore the best spots to see the night sky!</h2>
     
     <h3>Select a State</h3>
-    <select id="selState" onchange="zoomIn(this.value)">
+    <select id="selState" onchange="onStateSelectChange(this.value)">
       <option value="AL">Alabama</option>
       <option value="AK">Alaska</option>
       <option value="AZ">Arizona</option>
@@ -121,25 +121,29 @@
 
   </section>
 
+  <!-- Make table of moon and cloud condition for 10 days from today -->
+  <!-- Highlight when moon illumination <=10 and cloud cover <= 10 -->
   <div>
-    <table class="travelinfo-table">
-      <thead>
-        <tr>
-          <th><h2>Cloudiness</h2></th>
-          <th><h2>Where to stay</h2></th>
+  <section id="moonWeatherSection"> 
+    <h2 class="moon-header">  </h2>
+    <table class="moonWeathertable">
+      <thead id="tableHeaders">   
+        <tr> 
+        <th><h2>Cloudiness</h2></th>
+        <th><h2>Where to stay</h2></th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-        </tr>
-      </tbody>
+      <tbody id="moonDataBody"></tbody>
     </table>
-  </div>
+</section> 
+</div>
+
 
   <div>
     <canvas id="myChart"></canvas>
   </div>
-  
+
+
   <!-- Chart.js JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Leaflet JavaScript -->
