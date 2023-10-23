@@ -5,7 +5,7 @@ import datetime as dt
 import pandas as pd
 import json
 # pip install -U flask-cors
-from config import geoapify_key
+from api_keys import geoapify_key
 
 app = Flask(__name__)
 CORS(app)

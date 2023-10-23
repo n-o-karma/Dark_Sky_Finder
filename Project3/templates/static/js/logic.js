@@ -1,3 +1,4 @@
+// Read in the light pollution data
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
 const stayIcon = L.icon({
@@ -5,14 +6,18 @@ const stayIcon = L.icon({
   iconSize: [30, 30],
 });
 
+// Use light pollution data to create 2 default map layers and a dynamic one for lodging
 function createLayers(response) {
   let myMarkers = [];
   let heatArray = [];
-  
+  let stayMarkerLayer = [];
+  console.log(response)
   for (let i = 0; i < response.length; i++) {
     let event = response[i];
+    // Use data points with dark skies; i.e. NELM >= 4
     if (event.NELM >= 4){
       let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `);
+      // Add these points individually and as a heatmap
       myMarkers.push(myMark);
       heatArray.push([event.Latitude, event.Longitude]);
       myMark.on('click', function(e) {
@@ -32,19 +37,23 @@ function createLayers(response) {
         .then(data => {
           console.log('Response from Flask server:', data);
           createStayTable(data.stay_places_data, data.radius);
-          const name = data.stay_places_data.name;
+
           data.stay_places_data.forEach(place => {
-          const stayMarker = L.marker([place.latitude, place.longitude], { icon: stayIcon })
-              .addTo(map)
-              .bindPopup(place.name);
+          let stayMarker = L.marker([place.latitude, place.longitude], {icon: stayIcon}).bindPopup(place.name);
+          stayMarkerLayer.push(stayMarker)
           });
+          
+          let stayMarkerGroup = L.layerGroup(stayMarkerLayer)
+          stayMarkerGroup.addTo(map);
+          stayMarkerLayer = [];
         })
         .catch(error => console.error('Error:', error));
       });
-      
     };
   };
+  console.log(myMarkers)
 
+  //Control for layers 
   let overlayMaps = {
     "Data Sites": L.layerGroup(myMarkers),
     'Heat Map': L.heatLayer(heatArray,{minOpacity:0.35,maxZoom:10})
@@ -53,6 +62,7 @@ function createLayers(response) {
     collapsed: false
   }).addTo(map);
 
+  // This gives the state border outlines
   fetch('static/js/gz_2010_us_040_00_500k.json').then((response2) => response2.json()).then(function makeStates(json){
     for (feature of json.features){
       L.geoJSON(feature.geometry).addTo(map)
@@ -60,10 +70,12 @@ function createLayers(response) {
   });
 };
 
+// Satellite image tiles
 let Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
+// Night-time light source tiles
 let NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
 	attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
 	bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
@@ -74,6 +86,7 @@ let NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nas
 	tilematrixset: 'GoogleMapsCompatible_Level'
 });
 
+// Define a map, centered at the center of the USA
 let map = L.map("map", {
   center: [37.0902, -95.7129],
   zoom: 4,
@@ -191,7 +204,7 @@ function addTableHeadersCloud() {
   const th = document.createElement('th');
   th.setAttribute('colspan', '4');
   headerRow1.style.fontSize = "20px";
-  const headerText = document.createTextNode('Moon and Cloud');
+  const headerText = document.createTextNode('Moon and Cloud Info');
   th.appendChild(headerText);
   th.style.fontSize = "30px";
   tr.appendChild(th);
