@@ -1,3 +1,4 @@
+// Replace this with a path to the flask server created by Michael and Stephen
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv'
 d3.csv(lightpollu_path).then(createLayers);
 
@@ -16,7 +17,8 @@ function createLayers(response) {
 
     let overlayMaps = {
       "Data Sites": L.layerGroup(myMarkers),
-      'Heat Map': L.heatLayer(heatArray,{minOpacity:0.35,maxZoom:10})
+      'Heat Map': L.heatLayer(heatArray,{minOpacity:0.35,maxZoom:10}),
+      "States": L.layerGroup(statesmap, {color:'white', fillOpacity:0.5})
     };
     L.control.layers(baseMaps,overlayMaps, {
       collapsed: false
@@ -41,14 +43,23 @@ var NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nas
 	tilematrixset: 'GoogleMapsCompatible_Level'
 });
 
+let statesmap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  minZoom: 1,
+	maxZoom: 8,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+
+let mapcenter = [37.8, -96];
+let mapzoom = 5;
+
 let map = L.map("map", {
-  center: [37.0902, -95.7129],
-  zoom: 4,
+  center: mapcenter,
+  zoom: mapzoom,
   layers: [NASAGIBS_ViirsEarthAtNight2012]
 });
 
 let baseMaps = {
-  "Street Map": NASAGIBS_ViirsEarthAtNight2012
+  "Night Lights Map": NASAGIBS_ViirsEarthAtNight2012,
 };
 
 function zoomIn(state){
@@ -90,10 +101,11 @@ function findDates(response){
 }
 
 // Starting values for the moon drawing:
+
 let moonshadow = 0.5;
 let waxing = true;
 let css_style = {
-  diameter: 150,
+  diameter: 95,
   earthsine: 0.1,
   blur:10,
   lightColour: '#fff0b1'};
@@ -131,20 +143,16 @@ let nextmoonphases = [{'date': '2023-10-18', 'moon_illumination': '', 'moon_phas
    'moon_phase': 'Waxing Gibbous'}]
 moondrawing(nextmoonphases);
 
-
 function moondrawing(nextmoonphases) {
   let header = d3.select(".moonheaders");
   let content = d3.select(".moondata");
   let drawings = d3.select(".moondrawing")
   for (let i = 1; i<nextmoonphases.length; i++ ) {
     let newshadow = nextmoonphases[i].moon_illumination/100;
-
     moonphases.push(newshadow);
-    // drawPlanetPhase(document.getElementById("moondrawing"), moonshadow, waxing, css_style)
     header.append("th").text(nextmoonphases[i].date);
     content.append("td").text(nextmoonphases[i].moon_phase);
     drawings.append("td").attr("id", `phase_${i-1}`).text(`${i}`)
   }
   console.log(moonphases);
-  //drawPlanetPhase(mooncontainer, moonshadow, waxing, css_style);
 }
