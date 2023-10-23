@@ -23,7 +23,7 @@
   <div class="main"></div>
 
   <section id="states">  
-    <h1 style="font-size:50px;">Dark Sky Finder</h1>
+
     <h2>Use the interactive tools below to explore the best spots to see the night sky!</h2>
     
     <h3>Select a State</h3>
@@ -123,21 +123,35 @@
 
   <!-- Make table of moon and cloud condition for 10 days from today -->
   <!-- Highlight when moon illumination <=10 and cloud cover <= 10 -->
-  <div>
+  <div class="tables-container">
+    <div class="table-container">
   <section id="moonWeatherSection"> 
     <h2 class="moon-header">  </h2>
     <table class="moonWeathertable">
       <thead id="tableHeaders">   
-        <tr> 
-        <th><h2>Cloudiness</h2></th>
-        <th><h2>Where to stay</h2></th>
-        </tr>
+        <!-- <tr> 
+        <th colspan="4"><h2>Moon and Cloudiness</h2></th>
+        </tr> -->
       </thead>
       <tbody id="moonDataBody"></tbody>
     </table>
 </section> 
 </div>
 
+<div class="table-container">
+  <section id="staySection"> 
+    <h2 class="stay-header">  </h2>
+    <table class="staytable">
+      <thead id="stayHeaders">   
+        <tr> 
+        <!-- <th><h2>Where to stay</h2></th> -->
+        </tr>
+      </thead>
+      <tbody id="stayDataBody"></tbody>
+    </table>
+</section> 
+</div>
+</div>
 
   <div>
     <canvas id="myChart"></canvas>

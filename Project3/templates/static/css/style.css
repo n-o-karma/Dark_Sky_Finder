@@ -73,3 +73,11 @@ th, td {
 .highlight {
   background-color: white;
 }
+
+.tables-container {
+  display: flex;
+}
+
+.table-container {
+  flex: 1;
+}

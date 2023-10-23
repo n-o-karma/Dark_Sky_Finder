@@ -5,6 +5,7 @@ import datetime as dt
 import pandas as pd
 import json
 # pip install -U flask-cors
+from config import geoapify_key
 
 app = Flask(__name__)
 CORS(app)
@@ -34,6 +35,7 @@ def moon_data(selected_location):
         })   
     # moon_data_df = pd.DataFrame(moon_data_list)
     # moon_data_df['date'] = pd.to_datetime(moon_data_df['date'], format='%Y-%m-%d')
+    print(moon_illum)
     return moon_data_list
 
 #  Defind function to get weather data : Cloud forecast for 10 days from today
@@ -56,6 +58,8 @@ def weather_data(selected_location):
     # input our own id and pwd for https://api.meteomatics.com
     #username = 'YOUR ID'
     #password = 'YOUR PASSWORD'
+    username= 'upenn_whang_si'
+    password= '6EXl0d7fjB'
 
     # cloud_levels = ["low", "medium", "high", "effective", "total"]
     # all_cloud_data = {}
@@ -93,6 +97,65 @@ def combined_data(moon_data_json,weather_data_json):
     moon_weather_json = moon_weather_df.to_json(orient='records')
     return moon_weather_json
 
+#Define function to get staying places
+def get_stay_places(lat, lon):
+    radius = 10000 
+    params_camping = {
+        "categories": "camping",
+        "apiKey": geoapify_key,
+        "format": "json"
+    }
+    params_accommodation = {
+        "categories": "accommodation.hotel",
+        "apiKey": geoapify_key,
+        "format": "json"
+    }
+    latitude = lat
+    longitude = lon
+    stay_places_data = []
+
+    # Add filter and bias parameters with the current city's latitude and longitude to the params dictionary
+    params_camping["filter"] = f"circle:{longitude},{latitude},{radius}"
+    params_camping["bias"] = f"proximity:{longitude},{latitude}"
+
+    params_accommodation["filter"] = f"circle:{longitude},{latitude},{radius}"
+    params_accommodation["bias"] = f"proximity:{longitude},{latitude}"
+
+    # Set base URL
+    base_url = "https://api.geoapify.com/v2/places"
+
+    # Make an API request for camping sites
+    response_camping = requests.get(base_url, params=params_camping)
+    camping_data = response_camping.json()
+
+    # Make an API request for accommodation
+    response_accommodation = requests.get(base_url, params=params_accommodation)
+    accommodation_data = response_accommodation.json()
+
+    # Iterate through all the hotels and append their names to the list
+    for feature in camping_data["features"]:
+        try:
+            stay_places_data.append({
+                 "name": feature["properties"]["name"],
+                "latitude": feature["properties"]["lat"],
+                "longitude": feature["properties"]["lon"]
+            })
+        except KeyError:
+            pass
+
+    # Iterate through all the accommodation data and append their names to the list
+    for feature in accommodation_data["features"]:
+        try:
+            stay_places_data.append({
+                "name": feature["properties"]["name"],
+                "latitude": feature["properties"]["lat"],
+                "longitude": feature["properties"]["lon"]
+            })
+        except KeyError:
+            pass
+
+    return stay_places_data, radius
+
 ##test for moon_data function
 # selected_location = [39.952583, -75.165222] 
 # moon_data_json = moon_data(selected_location)
@@ -100,9 +163,9 @@ def combined_data(moon_data_json,weather_data_json):
 # moon_weather_json = combined_data(moon_data_json,weather_data_json)
 # print(moon_weather_json)
 
-# @app.route('/')
-# def home():
-#     return render_template('index_han.html')
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route("/api/v1.0/moon-weather-data", methods=['POST'])
 def moon_data_request():
@@ -119,6 +182,21 @@ def moon_data_request():
     print('moon_weather_data_json')
     print(moon_weather_data_json)
     return jsonify(moon_weather_data_json)
+
+@app.route('/api/v1.0/stay-places', methods=['POST'])
+def stay_at_darkplace():
+    data = request.get_json() 
+    print(data)
+    lat = data.get('lat')
+    lon = data.get('lon')
+    print(lat)
+    stay_places_data, radius = get_stay_places(lat, lon)
+    print('stay_places_data')
+    print(stay_places_data)
+    return jsonify({
+        'stay_places_data': stay_places_data,
+        'radius': radius
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,16 +1,47 @@
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
+const stayIcon = L.icon({
+  iconUrl: 'static/css/stay_icon.jpg',
+  iconSize: [30, 30],
+});
 
 function createLayers(response) {
   let myMarkers = [];
   let heatArray = [];
-
+  
   for (let i = 0; i < response.length; i++) {
     let event = response[i];
     if (event.NELM >= 4){
       let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `);
       myMarkers.push(myMark);
       heatArray.push([event.Latitude, event.Longitude]);
+      myMark.on('click', function(e) {
+        // Get latitude and longitude from the event
+        let lat = e.latlng.lat;
+        let lon = e.latlng.lng;
+        console.log('Clicked marker at latitude: ' + lat + ', longitude: ' + lon);
+        // Make a POST request to the Flask server
+        fetch('http://localhost:5000/api/v1.0/stay-places', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          body: JSON.stringify({lat: lat, lon: lon})
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Response from Flask server:', data);
+          createStayTable(data.stay_places_data, data.radius);
+          const name = data.stay_places_data.name;
+          data.stay_places_data.forEach(place => {
+          const stayMarker = L.marker([place.latitude, place.longitude], { icon: stayIcon })
+              .addTo(map)
+              .bindPopup(place.name);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+      });
+      
     };
   };
 
@@ -66,8 +97,9 @@ function getStateCoordinates(response, state){
 
 // Make table of moon_weather_data
 function createMoonWeatherDataTable(data) {
-  resetTable();
-  addTableHeaders();
+  resetTableCloud();
+  resetTableStay();
+  addTableHeadersCloud();
   const moonDataBody = document.getElementById('moonDataBody');
   data.forEach(row => {
       console.log(row.date, row.moon_illumination, row.moon_phase); 
@@ -92,15 +124,31 @@ function createMoonWeatherDataTable(data) {
   });
 }
 
+// Make table of staying
+function createStayTable(data,radius) {
+  resetTableStay();
+  addTableHeadersStay();
+  const stayDataBody = document.getElementById('stayDataBody');
+  console.log("test1")
+  console.log(radius);
+  if (data.length === 0) {
+    const newRow = document.createElement('tr');
+    const newCell = document.createElement('td');
+    newCell.textContent = `Sorry, we cannot find any accommodation within  ${radius} miles`;
+    newRow.appendChild(newCell);
+    stayDataBody.appendChild(newRow);
+  } else {
+    data.forEach(item => {
+      const newRow = document.createElement('tr');
+      const newCell = document.createElement('td');
+      newCell.textContent = item.name;
+      newRow.appendChild(newCell);
+      stayDataBody.appendChild(newRow);
+    });
+  }
+}
+
 function onStateSelectChange(state){
-  console.log('test');
-  console.log(state);
-  console.log(typeof geoapify_key);
-  console.log('geoapify_key');
-  console.log(geoapify_key);
-  console.log('geoapify_key');
-
-
   let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
   
   // d3.json(geoapify_url).then(stateZoom)
@@ -133,22 +181,67 @@ function onStateSelectChange(state){
   .catch(error => console.error('Error:', error));
 };
 
-// Make a table header
-function addTableHeaders() {
-  const tableHeaders = ["Date", "Moon Illumination", "Moon Phase","Cloud Cover (Total)"];
-  const headerRow = document.getElementById('tableHeaders');
-  tableHeaders.forEach(header => {
+// Make a table header for moonCoudTable
+function addTableHeadersCloud() {
+  const tableHeaders1 = ["Date", "Moon Illumination", "Moon Phase","Cloud Cover (Total)"];
+  const headerRow1 = document.getElementById('tableHeaders');
+  headerRow1.style.fontSize = "30px";
+
+  const tr = document.createElement('tr');
+  const th = document.createElement('th');
+  th.setAttribute('colspan', '4');
+  headerRow1.style.fontSize = "20px";
+  const headerText = document.createTextNode('Moon and Cloud');
+  th.appendChild(headerText);
+  th.style.fontSize = "30px";
+  tr.appendChild(th);
+  headerRow1.appendChild(tr);
+
+  tableHeaders1.forEach(header => {
       const th = document.createElement('th');
       th.appendChild(document.createTextNode(header));
-      headerRow.appendChild(th);
+      headerRow1.appendChild(th);
   });
 }
 
-// reset the table after selecting another state
-function resetTable() {
+
+// reset the cloud table after selecting another state
+function resetTableCloud() {
   const moonDataBody = document.getElementById('moonDataBody');
+  const headerRow = document.getElementById('tableHeaders');
+
   while (moonDataBody.firstChild) {
-      moonDataBody.removeChild(moonDataBody.firstChild);
+    moonDataBody.removeChild(moonDataBody.firstChild);
+  }
+
+  while (headerRow.firstChild) {
+    headerRow.removeChild(headerRow.firstChild);
+  }
+}
+
+// make stay table head
+function addTableHeadersStay() {
+  const stayHeaders = document.getElementById('stayHeaders');
+  const tr = document.createElement('tr');
+  const th = document.createElement('th');
+  const headerText = document.createTextNode('Where to stay');
+  th.appendChild(headerText);
+  th.style.fontSize = '30px';
+  tr.appendChild(th);
+  stayHeaders.appendChild(tr);
+}
+
+// reset the stay table after selecting another dark place
+function resetTableStay() {
+  const stayDataBody = document.getElementById('stayDataBody');
+  const stayHeaders = document.getElementById('stayHeaders');
+
+  while (stayDataBody.firstChild) {
+    stayDataBody.removeChild(stayDataBody.firstChild);
+  }
+
+  while (stayHeaders.firstChild) {
+    stayHeaders.removeChild(stayHeaders.firstChild);
   }
 }
 
