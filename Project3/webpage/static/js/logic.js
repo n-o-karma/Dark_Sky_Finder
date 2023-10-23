@@ -1,19 +1,29 @@
+// Read in the light pollution data
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
 
+// Use light pollution data to create 2 map layers
 function createLayers(response) {
   let myMarkers = [];
   let heatArray = [];
 
   for (let i = 0; i < response.length; i++) {
-    let event = response[i];
+    let event = response[i]; 
+    // Use data points with dark skies; i.e. NELM >= 4
     if (event.NELM >= 4){
-      let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `);
+      // Call the function to find hotels when a data point is selected
+      let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `).on('click', getHotels(event.Latitude, event.Longitude));
+      // Add these points individually and as a heatmap
       myMarkers.push(myMark);
       heatArray.push([event.Latitude, event.Longitude]);
     };
   };
 
+  function getHotels(lat,lon){
+    // !! There should be a call to the flask API connecting to Hannah's python code here !!
+  }
+
+  //Control for layers 
   let overlayMaps = {
     "Data Sites": L.layerGroup(myMarkers),
     'Heat Map': L.heatLayer(heatArray,{minOpacity:0.35,maxZoom:10})
@@ -22,6 +32,7 @@ function createLayers(response) {
     collapsed: false
   }).addTo(map);
 
+  // This gives the state border outlines
   fetch('static/js/gz_2010_us_040_00_500k.json').then((response2) => response2.json()).then(function makeStates(json){
     for (feature of json.features){
       L.geoJSON(feature.geometry).addTo(map)
@@ -29,10 +40,12 @@ function createLayers(response) {
   });
 };
 
+// Satellite image tiles
 let Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 });
 
+// Night-time light source tiles
 let NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}', {
 	attribution: 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.',
 	bounds: [[-85.0511287776, -179.999999975], [85.0511287776, 179.999999975]],
@@ -43,6 +56,7 @@ let NASAGIBS_ViirsEarthAtNight2012 = L.tileLayer('https://map1.vis.earthdata.nas
 	tilematrixset: 'GoogleMapsCompatible_Level'
 });
 
+// Define a map, center at the center of the USA
 let map = L.map("map", {
   center: [37.0902, -95.7129],
   zoom: 4,
@@ -54,6 +68,7 @@ let baseMaps = {
   "Light Sources":NASAGIBS_ViirsEarthAtNight2012
 };
 
+// When a state is selected from the dropdown, zoom into that area
 function zoomIn(state){
   let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
   d3.json(geoapify_url).then(stateZoom)
@@ -69,33 +84,15 @@ function zoomIn(state){
   };
 };
 
+// This is where the selected date value is read here into the JS
 function selDate(date){
+  // !! This needs to be connected to the moon and weather data!!
   console.log(date)
   let area = document.getElementById('dates')
   area.scrollIntoView({behavior:"smooth"})
 }
 
 let moonphase_path = '../api_data/Resources/moon_phases.csv'
-d3.csv(moonphase_path).then(findDates);
-
-function findDates(response){
-  labels = []
-  data = []
-  for (let i = 1; i < 13; i++){
-    labels.push(response.columns[i])
-  }
-  const theChart = document.getElementById('myChart');
-  new Chart(theChart,{
-    type:'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Moon Visibility',
-        data: data
-      }]
-    }
-  })
-}
 
 // Starting values for the moon drawing:
 let moonshadow = 0.5;
