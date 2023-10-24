@@ -103,7 +103,7 @@
 
   
    <!-- Moon phases section -->
-  <section>
+  <section id="moon">
     <h2>Check below to see the best times to go!</h2>
 
     <table class="moontable">
@@ -130,9 +130,6 @@
     <h2 class="moon-header">  </h2>
     <table class="moonWeathertable">
       <thead id="tableHeaders">   
-        <!-- <tr> 
-        <th colspan="4"><h2>Moon and Cloudiness</h2></th>
-        </tr> -->
       </thead>
       <tbody id="moonDataBody"></tbody>
     </table>
@@ -145,7 +142,6 @@
     <table class="staytable">
       <thead id="stayHeaders">   
         <tr> 
-        <!-- <th><h2>Where to stay</h2></th> -->
         </tr>
       </thead>
       <tbody id="stayDataBody"></tbody>
@@ -183,15 +179,5 @@
 
 <!-- Moon Shadow Library Call -->
 <script src="static/js/planet_phase.js"></script>
-<script>
-  drawPlanetPhase(document.getElementById("phase_0"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_1"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_2"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_3"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_4"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_5"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_6"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_7"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_8"), moonshadow, waxing, css_style)
-</script>
+
 </html>

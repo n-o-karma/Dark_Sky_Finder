@@ -6,12 +6,12 @@ const stayIcon = L.icon({
   iconSize: [30, 30],
 });
 
+let oldStayMarkerGroup = null;
 // Use light pollution data to create 2 default map layers and a dynamic one for lodging
 function createLayers(response) {
   let myMarkers = [];
   let heatArray = [];
   let stayMarkerLayer = [];
-  console.log(response)
   for (let i = 0; i < response.length; i++) {
     let event = response[i];
     // Use data points with dark skies; i.e. NELM >= 4
@@ -44,6 +44,10 @@ function createLayers(response) {
           });
           
           let stayMarkerGroup = L.layerGroup(stayMarkerLayer)
+          if( oldStayMarkerGroup){
+            map.removeLayer(oldStayMarkerGroup)
+          }
+          oldStayMarkerGroup = stayMarkerGroup
           stayMarkerGroup.addTo(map);
           stayMarkerLayer = [];
         })
@@ -51,7 +55,7 @@ function createLayers(response) {
       });
     };
   };
-  console.log(myMarkers)
+
 
   //Control for layers 
   let overlayMaps = {
@@ -101,13 +105,12 @@ let baseMaps = {
 function getStateCoordinates(response, state){
   for (item of response.features){
     if (item.properties.state_code == state){
-      console.log(state);
       return [item.properties.lat, item.properties.lon]
     }
   }
   throw new Error("Unable to find valid state latitude and longitude");
 }
-
+let nextmoonphases = [{}]
 // Make table of moon_weather_data
 function createMoonWeatherDataTable(data) {
   resetTableCloud();
@@ -115,7 +118,8 @@ function createMoonWeatherDataTable(data) {
   addTableHeadersCloud();
   const moonDataBody = document.getElementById('moonDataBody');
   data.forEach(row => {
-      console.log(row.date, row.moon_illumination, row.moon_phase); 
+      nextmoonphases.push({"date": row.date,"moon_illumination": row.moon_illumination,"moon_phase": row.moon_phase})
+
       const newRow = document.createElement('tr');
       const dateCell = document.createElement('td');
       dateCell.appendChild(document.createTextNode(row.date));
@@ -135,6 +139,7 @@ function createMoonWeatherDataTable(data) {
 
       moonDataBody.appendChild(newRow);
   });
+  moondrawing(nextmoonphases);
 }
 
 // Make table of staying
@@ -167,11 +172,9 @@ function onStateSelectChange(state){
   // d3.json(geoapify_url).then(stateZoom)
   d3.json(geoapify_url)
   .then(response => {
-    console.log('test2')
     return getStateCoordinates(response, state)}
   )
   .then((stateCoords) => {
-    console.log('test3');
     fetch('http://localhost:5000/api/v1.0/moon-weather-data', {
       method: 'POST',
       headers: {
@@ -181,10 +184,7 @@ function onStateSelectChange(state){
     .then(response=> response.json())
     .then(moon_weather_data => {
       // do stuff with moon_weather data
-      console.log(moon_weather_data);
       const jsonData = JSON.parse(moon_weather_data);
-      console.log(jsonData);
-      console.log(typeof jsonData); 
       createMoonWeatherDataTable(jsonData)
     })
     .catch(error => console.error('Error:', error));
@@ -287,47 +287,16 @@ function findDates(response){
 }
 
 // Starting values for the moon drawing:
-let moonshadow = 0.5;
 let waxing = true;
 let css_style = {
   diameter: 150,
-  earthsine: 0.1,
+  earthshine: 0.1,
   blur:10,
   lightColour: '#fff0b1'};
 let mooncontainer = document.getElementById("moondrawing")
 
 // Temp list of moonphases for testing
 let moonphases = [];
-let nextmoonphases = [{'date': '2023-10-18', 'moon_illumination': '', 'moon_phase': ''},
-  {'date': '2023-10-19',
-   'moon_illumination': 18,
-   'moon_phase': 'Waxing Crescent'},
-  {'date': '2023-10-20',
-   'moon_illumination': 27,
-   'moon_phase': 'Waxing Crescent'},
-  {'date': '2023-10-21',
-   'moon_illumination': 37,
-   'moon_phase': 'Waxing Crescent'},
-  {'date': '2023-10-22',
-   'moon_illumination': 48,
-   'moon_phase': 'First Quarter'},
-  {'date': '2023-10-23',
-   'moon_illumination': 60,
-   'moon_phase': 'Waxing Gibbous'},
-  {'date': '2023-10-24',
-   'moon_illumination': 71,
-   'moon_phase': 'Waxing Gibbous'},
-  {'date': '2023-10-25',
-   'moon_illumination': 81,
-   'moon_phase': 'Waxing Gibbous'},
-  {'date': '2023-10-26',
-   'moon_illumination': 89,
-   'moon_phase': 'Waxing Gibbous'},
-  {'date': '2023-10-27',
-   'moon_illumination': 95,
-   'moon_phase': 'Waxing Gibbous'}]
-moondrawing(nextmoonphases);
-
 
 function moondrawing(nextmoonphases) {
   let header = d3.select(".moonheaders");
@@ -335,13 +304,10 @@ function moondrawing(nextmoonphases) {
   let drawings = d3.select(".moondrawing")
   for (let i = 1; i<nextmoonphases.length; i++ ) {
     let newshadow = nextmoonphases[i].moon_illumination/100;
-
     moonphases.push(newshadow);
-    // drawPlanetPhase(document.getElementById("moondrawing"), moonshadow, waxing, css_style)
     header.append("th").text(nextmoonphases[i].date);
     content.append("td").text(nextmoonphases[i].moon_phase);
-    drawings.append("td").attr("id", `phase_${i-1}`).text(`${i}`)
+    drawings.append("td").attr("id", `phase_${i-1}`).text(`${moonphases[i-1]}`)
+    drawPlanetPhase(document.getElementById(`phase_${i-1}`), moonphases[i-1], waxing, css_style);
   }
-  console.log(moonphases);
-  //drawPlanetPhase(mooncontainer, moonshadow, waxing, css_style);
-}
+};

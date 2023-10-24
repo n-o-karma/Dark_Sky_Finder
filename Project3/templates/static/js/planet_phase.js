@@ -79,7 +79,8 @@ var drawPlanetPhase = (function(){
     }
     function makeDiv(container){
         var div = document.createElement('div');
-        container.appendChild(div);
+        if(container != null){
+        container.appendChild(div)};
         return div;
     }
     function setPhase(outerBox, phase, isWaxing, config){
