@@ -5,6 +5,15 @@ body{
   background-color: #00011D;
 }
 
+p, #info {
+  font-family: Arial, Helvetica, sans-serif;
+  color:#fff;
+  text-align: left;
+  font-size: 24px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
 .main {
   position: fixed;
   top: 50%;
