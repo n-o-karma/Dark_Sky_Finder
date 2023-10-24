@@ -91,25 +91,15 @@
   <br>  <br>
   <br>  <br>
 
-  <!-- Date Selection -->
-  <section id="dates">
-    <form>
-      <label for="when">Select a Date</label>
-      <br>
-      <input type="date" id="when" name="when" onchange="selDate(this.value)">
-      <br>
-    </form>
-  </section>
-
   
    <!-- Moon phases section -->
   <section id="moon">
     <h2>Check below to see the best times to go!</h2>
 
     <table class="moontable">
-        <tr class="moonheaders"></tr>
-        <tr class="moondata"></tr>
-        <tr class="moondrawing"></tr>
+        <tr id="moonheaders"></tr>
+        <tr id="moondata"></tr>
+        <tr id="moondrawing"></tr>
     </table>
     
     <div></div>
@@ -152,36 +142,41 @@
 </div>
 </div>
 
+<br>  <br>
+<br>  <br>
+
   <div>
     <canvas id="myChart"></canvas>
   </div>
 
+  <br>  <br>
+  <br>  <br> 
 <div id="resources">
-  <h1>How we found good places to stargaze</h1><br>
+  <h1><u>How to find good places to stargaze</u></h1><br>
 
-  <h1>NELM and Bortle Scale</h1><br>
+  <h1>NELM and The Bortle Scale</h1><br>
     
   <h2 id="info">There are many ways in which we can measure conditions of the nightsky and 
     how to pick the best spot. 
     Some of the tools we have are: </h2><br>
   <p>NELM: Naked-Eye Limiting Magnitude which is the apparent magnitude of the faintest stars 
     that can be seen with the naked eye.</p><br>
-  <p>We also use the Bortle Scare which is a 9 level numeric scale used to describe the darkness 
-    of the night sky. Class 1 would be no light pollution at all. The darkest sky. Class 9 would be 
+  <p>We also use the Bortle Scale which is a 9-level numeric scale used to describe the darkness 
+    of the night sky. Class 1 would be no light pollution at all: the darkest sky. Class 9 would be 
     an  Inner City sky, with very little visibility. </p><br><br>
   
-  <h2 id="info">The best spots - Location Location Location.</h2><br><br>
-  <p>You want somewhere at least 30 miles from the biggest city, ideally you'd want it further, 
+  <h1 id="info2">The best spots - Location Location Location.</h1><br><br>
+  <p>You want to find a spot at least 30 miles from the biggest city; ideally even further, 
     where there is very little light pollution, no clouds, fog, moisture, haze, etc. 
-    The higher the altitude the better.</p><br>
+    The higher the altitude the better in order to circumvent these obstacles.</p><br>
   <p>Check the weather for cloudy conditions, preciptiation and visibility. 
     Also plan for a time 2 weeks before or after the new moon.  </p><br>
   <p>The best time to observe the stars, with regard to the Moon's brightness, 
     is the two weeks before and after the new moon phase. On these evenings the Moon is either absent 
     from the sky all night, or sets within a couple of hours after sunset, or doesn't rise until 
     the pre-dawn hours.</p><br>
-  <p>And if you're really passionate about stargazing you can get a Sky quality meter which measures
-     the brightness of the night sky and you can submit that data to Globe at Night. 
+  <p>If you're really passionate about stargazing, you can get a sky quality meter to measure
+     the brightness of the night sky; then submit that data to Globe at Night. 
      This information will help us better understand our evolving night sky conditions 
      and how we can make changes to enhance the aesthetics of the night sky for viewing pleasures ✨</p><br>
 

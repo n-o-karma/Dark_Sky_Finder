@@ -61,10 +61,7 @@ def weather_data(selected_location):
     username= 'upenn_whang_si'
     password= '6EXl0d7fjB'
 
-    # cloud_levels = ["low", "medium", "high", "effective", "total"]
-    # all_cloud_data = {}
 
-    # for level in cloud_levels :
     level = "total"
     parameters = f'{level}_cloud_cover_mean_12h:p'
 

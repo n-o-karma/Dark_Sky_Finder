@@ -117,6 +117,7 @@ function createMoonWeatherDataTable(data) {
   resetTableStay();
   addTableHeadersCloud();
   const moonDataBody = document.getElementById('moonDataBody');
+  nextmoonphases = [{}]
   data.forEach(row => {
       nextmoonphases.push({"date": row.date,"moon_illumination": row.moon_illumination,"moon_phase": row.moon_phase})
 
@@ -152,7 +153,7 @@ function createStayTable(data,radius) {
   if (data.length === 0) {
     const newRow = document.createElement('tr');
     const newCell = document.createElement('td');
-    newCell.textContent = `Sorry, we cannot find any accommodation within  ${radius} miles`;
+    newCell.textContent = `Sorry, we cannot find any accommodation within  ${radius/1000} kilometers`;
     newRow.appendChild(newCell);
     stayDataBody.appendChild(newRow);
   } else {
@@ -169,7 +170,6 @@ function createStayTable(data,radius) {
 function onStateSelectChange(state){
   let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
   
-  // d3.json(geoapify_url).then(stateZoom)
   d3.json(geoapify_url)
   .then(response => {
     return getStateCoordinates(response, state)}
@@ -258,32 +258,36 @@ function resetTableStay() {
   }
 }
 
-function selDate(date){
-  console.log(date)
-  let area = document.getElementById('dates')
-  area.scrollIntoView({behavior:"smooth"})
-}
-
-let moonphase_path = '../api_data/Resources/moon_phases.csv'
-d3.csv(moonphase_path).then(findDates);
-
-function findDates(response){
-  labels = []
-  data = []
-  for (let i = 1; i < 13; i++){
-    labels.push(response.columns[i])
+function makeChart(nextmoonphases){
+  thelabels = []
+  thedata = []
+  for (let i = 1; i < 10; i++){
+    thelabels.push(nextmoonphases[i].date)
+    thedata.push(nextmoonphases[i].moon_illumination)
   }
-  const theChart = document.getElementById('myChart');
-  new Chart(theChart,{
+  let theChartArea = document.getElementById('myChart');
+  let theChart = new Chart(theChartArea,{
     type:'line',
+    options: {
+      animation: true,
+      plugins: {
+        legend: {
+          display: true
+        },
+        tooltip: {
+          enabled: true
+        }
+      }
+    },
     data: {
-      labels: labels,
+      labels: thelabels,
       datasets: [{
-        label: 'Moon Visibility',
-        data: data
+        label: 'Moon Visibility (%)',
+        data: thedata
       }]
     }
   })
+  
 }
 
 // Starting values for the moon drawing:
@@ -295,19 +299,42 @@ let css_style = {
   lightColour: '#fff0b1'};
 let mooncontainer = document.getElementById("moondrawing")
 
-// Temp list of moonphases for testing
-let moonphases = [];
-
 function moondrawing(nextmoonphases) {
-  let header = d3.select(".moonheaders");
-  let content = d3.select(".moondata");
-  let drawings = d3.select(".moondrawing")
-  for (let i = 1; i<nextmoonphases.length; i++ ) {
+  makeChart(nextmoonphases)
+  resetTableMoon()
+  let moonphases = [];
+  let header = d3.select("#moonheaders");
+  let content = d3.select("#moondata");
+  let drawings = d3.select("#moondrawing")
+
+  for (let i = 1; i < nextmoonphases.length; i++) {
     let newshadow = nextmoonphases[i].moon_illumination/100;
     moonphases.push(newshadow);
+    
     header.append("th").text(nextmoonphases[i].date);
     content.append("td").text(nextmoonphases[i].moon_phase);
+    if (nextmoonphases[i].moon_phase == 'Full'){
+      waxing = !waxing
+    }
     drawings.append("td").attr("id", `phase_${i-1}`).text(`${moonphases[i-1]}`)
     drawPlanetPhase(document.getElementById(`phase_${i-1}`), moonphases[i-1], waxing, css_style);
   }
 };
+
+function resetTableMoon() {
+  const moonHeaders = document.getElementById('moonheaders');
+  const moonData = document.getElementById('moondata');
+  const moonDrawing = document.getElementById('moondrawing');
+
+  while (moonHeaders.firstChild) {
+    moonHeaders.removeChild(moonHeaders.firstChild);
+  }
+
+  while (moonData.firstChild) {
+    moonData.removeChild(moonData.firstChild);
+  }
+
+  while (moonDrawing.firstChild) {
+    moonDrawing.removeChild(moonDrawing.firstChild);
+  }
+}

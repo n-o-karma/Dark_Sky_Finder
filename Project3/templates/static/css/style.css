@@ -42,6 +42,10 @@ p, #info {
   width: 90%;
 }
 
+#myChart {
+  background-color: #ffffff
+}
+
 #moondrawing { 
   margin-left: auto;
   margin-right: auto;
