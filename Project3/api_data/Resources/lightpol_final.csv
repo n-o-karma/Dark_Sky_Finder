@@ -1,4 +1,4 @@
-ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State,Bortle Class
+ObsDateTime,Latitude,Longitude,Elevation,NELM,Constellation,State,Bortle_Class
 2022-11-21 20:45:00+00:00,31.33409406268104,-109.5212115221496,1249.21,0.0,Canis Major,Arizona,Semi-Suburban/Transition sky
 2022-11-21 20:36:00+00:00,31.3340855129161,-109.5039518045475,1258.78,0.0,Canis Major,Arizona,Semi-Suburban/Transition sky
 2022-11-21 20:32:00+00:00,31.33410697353808,-109.48727293291188,1288.52,0.0,Canis Major,Arizona,Semi-Suburban/Transition sky
