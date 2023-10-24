@@ -1,6 +1,12 @@
-// Read in the light pollution data
+// Read the light pollution from flask
+let flaskpath = 'http://127.0.0.1:5000/api/v1.0/allstates';
+let state = "";
+d3.json('http://127.0.0.1:5000/api/v1.0/allstates').then(console.log("Flask fetched"));
+
+// Read in the light pollution data from csv
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
+
 const stayIcon = L.icon({
   iconUrl: 'static/css/stay_icon.jpg',
   iconSize: [30, 30],

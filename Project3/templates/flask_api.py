@@ -7,7 +7,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 import numpy as np
-
+from flask_cors import CORS
 
 #################################################
 # Database Setup
@@ -27,7 +27,7 @@ Lightpoldb = Base.classes.lightpollution
 # Flask Setup
 #################################################
 app = Flask(__name__)
-
+CORS(app)
 
 #################################################
 # Flask Routes
@@ -51,7 +51,9 @@ def allstates():
 
     """Return a list of all passenger names"""
     # Query all states
-    results = session.query(Lightpoldb.NELM, Lightpoldb.Constellation, Lightpoldb.State).all()
+    results = session.query(Lightpoldb.Latitude,Lightpoldb.Longitude, 
+                            Lightpoldb.NELM, Lightpoldb.Constellation, 
+                            Lightpoldb.State, Lightpoldb.Bortle_Class).all()
 
     session.close()
 
@@ -71,7 +73,9 @@ def bystate(state):
 
     """Return a list of passenger data including the name, age, and sex of each passenger"""
     # Query all passengers
-    results = session.query(Lightpoldb.Latitude,Lightpoldb.Longitude, Lightpoldb.NELM, Lightpoldb.Constellation, Lightpoldb.State).filter(Lightpoldb.State == state).all()
+    results = session.query(Lightpoldb.Latitude,Lightpoldb.Longitude,
+                            Lightpoldb.NELM, Lightpoldb.Constellation,
+                            Lightpoldb.State, Lightpoldb.Bortle_Class).filter(Lightpoldb.State == state).all()
 
     session.close()
 
