@@ -22,12 +22,13 @@
 <!-- Star animation -->
   <div class="main"></div>
 
+  <!-- State Selection -->
   <section id="states">  
-    <h1 style="font-size:50px;">Dark Sky Finder</h1>
+
     <h2>Use the interactive tools below to explore the best spots to see the night sky!</h2>
     
     <h3>Select a State</h3>
-    <select id="selState" onchange="zoomIn(this.value)">
+    <select id="selState" onchange="onStateSelectChange(this.value)">
       <option value="AL">Alabama</option>
       <option value="AK">Alaska</option>
       <option value="AZ">Arizona</option>
@@ -90,29 +91,19 @@
   <br>  <br>
   <br>  <br>
 
-  <section id="dates">
-    <form>
-      <label for="when">Select a Date</label>
-      <br>
-      <input type="date" id="when" name="when" onchange="selDate(this.value)">
-      <!-- <p><button onclick="selDate(this.value)">Submit </button></p> -->
-      <br>
-    </form>
-  </section>
-
   
    <!-- Moon phases section -->
-  <section>
+  <section id="moon">
     <h2>Check below to see the best times to go!</h2>
 
     <table class="moontable">
-        <tr class="moonheaders"></tr>
-        <tr class="moondata"></tr>
-        <tr class="moondrawing"></tr>
+        <tr id="moonheaders"></tr>
+        <tr id="moondata"></tr>
+        <tr id="moondrawing"></tr>
     </table>
-
+    
     <div></div>
-
+    
   <br>  <br>
   <br>  <br>
   <br>  <br>
@@ -121,25 +112,78 @@
 
   </section>
 
-  <div>
-    <table class="travelinfo-table">
-      <thead>
-        <tr>
-          <th><h2>Cloudiness</h2></th>
-          <th><h2>Where to stay</h2></th>
+  <!-- Make table of moon and cloud condition for 10 days from today -->
+  <!-- Highlight when moon illumination <=10 and cloud cover <= 10 -->
+  <div class="tables-container">
+    <div class="table-container">
+  <section id="moonWeatherSection"> 
+    <h2 class="moon-header">  </h2>
+    <table class="moonWeathertable">
+      <thead id="tableHeaders">   
+      </thead>
+      <tbody id="moonDataBody"></tbody>
+    </table>
+</section> 
+</div>
+
+<div class="table-container">
+  <section id="staySection"> 
+    <h2 class="stay-header">  </h2>
+    <table class="staytable">
+      <thead id="stayHeaders">   
+        <tr> 
         </tr>
       </thead>
-      <tbody>
-        <tr>
-        </tr>
-      </tbody>
+      <tbody id="stayDataBody"></tbody>
     </table>
-  </div>
+</section> 
+<br>  <br>  
+<br>  <br>
+</div>
+</div>
+
+<br>  <br>
+<br>  <br>
 
   <div>
     <canvas id="myChart"></canvas>
   </div>
+
+  <br>  <br>
+  <br>  <br> 
+<div id="resources">
+  <h1><u>How to find good places to stargaze</u></h1><br>
+
+  <h1>NELM and The Bortle Scale</h1><br>
+    
+  <h2 id="info">There are many ways in which we can measure conditions of the nightsky and 
+    how to pick the best spot. 
+    Some of the tools we have are: </h2><br>
+  <p>NELM: Naked-Eye Limiting Magnitude which is the apparent magnitude of the faintest stars 
+    that can be seen with the naked eye.</p><br>
+  <p>We also use the Bortle Scale which is a 9-level numeric scale used to describe the darkness 
+    of the night sky. Class 1 would be no light pollution at all: the darkest sky. Class 9 would be 
+    an  Inner City sky, with very little visibility. </p><br><br>
   
+  <h1 id="info2">The best spots - Location Location Location.</h1><br><br>
+  <p>You want to find a spot at least 30 miles from the biggest city; ideally even further, 
+    where there is very little light pollution, no clouds, fog, moisture, haze, etc. 
+    The higher the altitude the better in order to circumvent these obstacles.</p><br>
+  <p>Check the weather for cloudy conditions, preciptiation and visibility. 
+    Also plan for a time 2 weeks before or after the new moon.  </p><br>
+  <p>The best time to observe the stars, with regard to the Moon's brightness, 
+    is the two weeks before and after the new moon phase. On these evenings the Moon is either absent 
+    from the sky all night, or sets within a couple of hours after sunset, or doesn't rise until 
+    the pre-dawn hours.</p><br>
+  <p>If you're really passionate about stargazing, you can get a sky quality meter to measure
+     the brightness of the night sky; then submit that data to Globe at Night. 
+     This information will help us better understand our evolving night sky conditions 
+     and how we can make changes to enhance the aesthetics of the night sky for viewing pleasures ✨</p><br>
+
+
+
+</div>
+
   <!-- Chart.js JavaScript -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Leaflet JavaScript -->
@@ -155,21 +199,12 @@
 
   <!-- Our JavaScript -->
   <script type="text/javascript" src="static/js/logic.js"></script>
+  <!-- <script type="text/javascript" src="static/js/logic_table.js"></script> -->
   <script type="text/javascript" src="static/js/api_keys.js"></script>
 
 </body>
 
 <!-- Moon Shadow Library Call -->
 <script src="static/js/planet_phase.js"></script>
-<script>
-  drawPlanetPhase(document.getElementById("phase_0"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_1"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_2"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_3"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_4"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_5"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_6"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_7"), moonshadow, waxing, css_style)
-  drawPlanetPhase(document.getElementById("phase_8"), moonshadow, waxing, css_style)
-</script>
+
 </html>
