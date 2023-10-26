@@ -7,6 +7,7 @@ d3.json('http://127.0.0.1:5000/api/v1.0/allstates').then(console.log("Flask fetc
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
 
+// Create a custom leaflet icon for lodging
 const stayIcon = L.icon({
   iconUrl: 'static/css/stay_icon.jpg',
   iconSize: [30, 30],
@@ -112,18 +113,19 @@ function getStateCoordinates(response, state){
   for (item of response.features){
     if (item.properties.state_code == state){
       return [item.properties.lat, item.properties.lon]
-    }
-  }
+    };
+  };
   throw new Error("Unable to find valid state latitude and longitude");
-}
-let nextmoonphases = [{}]
+};
+
+let nextmoonphases = [{}];
 // Make table of moon_weather_data
 function createMoonWeatherDataTable(data) {
   resetTableCloud();
   resetTableStay();
   addTableHeadersCloud();
   const moonDataBody = document.getElementById('moonDataBody');
-  nextmoonphases = [{}]
+  nextmoonphases = [{}];
   data.forEach(row => {
       nextmoonphases.push({"date": row.date,"moon_illumination": row.moon_illumination,"moon_phase": row.moon_phase})
 
@@ -147,7 +149,7 @@ function createMoonWeatherDataTable(data) {
       moonDataBody.appendChild(newRow);
   });
   moondrawing(nextmoonphases);
-}
+};
 
 // Make table of staying
 function createStayTable(data,radius) {
@@ -170,8 +172,8 @@ function createStayTable(data,radius) {
       newRow.appendChild(newCell);
       stayDataBody.appendChild(newRow);
     });
-  }
-}
+  };
+};
 
 function onStateSelectChange(state){
   let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
@@ -221,7 +223,7 @@ function addTableHeadersCloud() {
       th.appendChild(document.createTextNode(header));
       headerRow1.appendChild(th);
   });
-}
+};
 
 
 // reset the cloud table after selecting another state
@@ -231,12 +233,11 @@ function resetTableCloud() {
 
   while (moonDataBody.firstChild) {
     moonDataBody.removeChild(moonDataBody.firstChild);
-  }
-
+  };
   while (headerRow.firstChild) {
     headerRow.removeChild(headerRow.firstChild);
-  }
-}
+  };
+};
 
 // make stay table head
 function addTableHeadersStay() {
@@ -248,7 +249,7 @@ function addTableHeadersStay() {
   th.style.fontSize = '30px';
   tr.appendChild(th);
   stayHeaders.appendChild(tr);
-}
+};
 
 // reset the stay table after selecting another dark place
 function resetTableStay() {
@@ -257,20 +258,19 @@ function resetTableStay() {
 
   while (stayDataBody.firstChild) {
     stayDataBody.removeChild(stayDataBody.firstChild);
-  }
-
+  };
   while (stayHeaders.firstChild) {
     stayHeaders.removeChild(stayHeaders.firstChild);
-  }
-}
+  };
+};
 
 function makeChart(nextmoonphases){
-  thelabels = []
-  thedata = []
-  for (let i = 1; i < 10; i++){
-    thelabels.push(nextmoonphases[i].date)
-    thedata.push(nextmoonphases[i].moon_illumination)
-  }
+  thelabels = [];
+  thedata = [];
+  for (let i = 1; i < nextmoonphases.length; i++){
+    thelabels.push(nextmoonphases[i].date);
+    thedata.push(nextmoonphases[i].moon_illumination);
+  };
   let theChartArea = document.getElementById('myChart');
   let theChart = new Chart(theChartArea,{
     type:'line',
@@ -292,25 +292,23 @@ function makeChart(nextmoonphases){
         data: thedata
       }]
     }
-  })
-  
-}
+  });
+};
 
 // Starting values for the moon drawing:
 let waxing = true;
 let css_style = {
-  diameter: 150,
+  diameter: 100,
   earthshine: 0.1,
   blur:10,
   lightColour: '#fff0b1'};
-let mooncontainer = document.getElementById("moondrawing")
+// let mooncontainer = document.getElementById("moondrawing")
 
 function moondrawing(nextmoonphases) {
   makeChart(nextmoonphases)
   resetTableMoon()
   let moonphases = [];
   let header = d3.select("#moonheaders");
-  let content = d3.select("#moondata");
   let drawings = d3.select("#moondrawing")
 
   for (let i = 1; i < nextmoonphases.length; i++) {
@@ -318,13 +316,14 @@ function moondrawing(nextmoonphases) {
     moonphases.push(newshadow);
     
     header.append("th").text(nextmoonphases[i].date);
-    content.append("td").text(nextmoonphases[i].moon_phase);
-    if (nextmoonphases[i].moon_phase == 'Full'){
+    if (nextmoonphases[i].moon_phase == 'Full'|| nextmoonphases[i].moon_phase == 'New'){
       waxing = !waxing
-    }
-    drawings.append("td").attr("id", `phase_${i-1}`).text(`${moonphases[i-1]}`)
-    drawPlanetPhase(document.getElementById(`phase_${i-1}`), moonphases[i-1], waxing, css_style);
-  }
+    };
+    if (nextmoonphases[i].moon_phase != ''){
+      drawings.append("td").attr("id", `phase_${i-1}`)
+      drawPlanetPhase(document.getElementById(`phase_${i-1}`), moonphases[i-1], waxing, css_style);
+    };
+  };
 };
 
 function resetTableMoon() {
@@ -334,13 +333,11 @@ function resetTableMoon() {
 
   while (moonHeaders.firstChild) {
     moonHeaders.removeChild(moonHeaders.firstChild);
-  }
-
+  };
   while (moonData.firstChild) {
     moonData.removeChild(moonData.firstChild);
-  }
-
+  };
   while (moonDrawing.firstChild) {
     moonDrawing.removeChild(moonDrawing.firstChild);
-  }
-}
+  };
+};

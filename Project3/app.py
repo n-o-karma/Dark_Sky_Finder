@@ -58,8 +58,8 @@ def weather_data(selected_location):
     # input our own id and pwd for https://api.meteomatics.com
     #username = 'YOUR ID'
     #password = 'YOUR PASSWORD'
-    username= 'upenn_whang_si'
-    password= '6EXl0d7fjB'
+    username= 'upenn_okarma_nicholas'
+    password= 'g39T1JCoqe'
 
 
     level = "total"
