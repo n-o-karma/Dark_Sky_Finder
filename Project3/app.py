@@ -5,20 +5,33 @@ import datetime as dt
 import pandas as pd
 import json
 # pip install -U flask-cors
+<<<<<<< HEAD
+from config import geoapify_key
+=======
 from api_keys import geoapify_key
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
 
 app = Flask(__name__)
 CORS(app)
 
 current_date = dt.datetime.now().strftime("%Y-%m-%d")
 
+<<<<<<< HEAD
+def moon_data(lat, lon):
+=======
 def moon_data(selected_location):
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
     # moon_phases = requests.get(moon_URL).json()
     # # Filter the data for the year 2023
     # filtered_data = [phase for phase in moon_phases['phasedata'] if phase['year'] == 2023]
     # return filtered_data
+<<<<<<< HEAD
+    latitude = lat
+    longitude = lon
+=======
     latitude = selected_location[0]
     longitude = selected_location[1]
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
     time_str = "00:00"
     moon_data_list = []
     for i in range(11):
@@ -41,14 +54,23 @@ def moon_data(selected_location):
 #  Defind function to get weather data : Cloud forecast for 10 days from today
 # Available levels: low, medium, high, effective, total , Available measures: mean
 # Available intervals: 1h, 2h, 6h, 12h, 24h  , Available units: octas, p
+<<<<<<< HEAD
+def weather_data(lat, lon):
+=======
 def weather_data(selected_location):
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
     base_url = 'https://api.meteomatics.com'
 
     current_date = dt.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
     validdatetime = f"{current_date}P10D:PT12H"
     
+<<<<<<< HEAD
+    latitude = lat
+    longitude = lon
+=======
     latitude = selected_location[0]
     longitude = selected_location[1]
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
 
     location = f"{latitude},{longitude}"
     format='json'
@@ -61,6 +83,7 @@ def weather_data(selected_location):
     username= 'upenn_okarma_nicholas'
     password= 'g39T1JCoqe'
 
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
 
     level = "total"
     parameters = f'{level}_cloud_cover_mean_12h:p'
@@ -154,9 +177,16 @@ def get_stay_places(lat, lon):
     return stay_places_data, radius
 
 ##test for moon_data function
+<<<<<<< HEAD
+# lat = 39.952583
+# lon = -75.165222
+# moon_data_json = moon_data(lat, lon)
+# weather_data_json = weather_data(lat, lon)
+=======
 # selected_location = [39.952583, -75.165222] 
 # moon_data_json = moon_data(selected_location)
 # weather_data_json = weather_data(selected_location)
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
 # moon_weather_json = combined_data(moon_data_json,weather_data_json)
 # print(moon_weather_json)
 
@@ -164,6 +194,17 @@ def get_stay_places(lat, lon):
 def home():
     return render_template('index.html')
 
+<<<<<<< HEAD
+@app.route("/api/v1.0/moon-weather-data/<lat>/<lon>", methods=['POST'])
+def moon_data_request(lat,lon):
+    # selected_location = request.get_json()
+    # print('selected_location')
+    # print(selected_location)
+    moon_data_json = moon_data(lat, lon)
+    print('moon_data_json')
+    print(moon_data_json)
+    weather_data_json = weather_data(lat, lon)
+=======
 @app.route("/api/v1.0/moon-weather-data", methods=['POST'])
 def moon_data_request():
     selected_location = request.get_json()
@@ -173,6 +214,7 @@ def moon_data_request():
     print('moon_data_json')
     print(moon_data_json)
     weather_data_json = weather_data(selected_location)
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
     print('weather_data_json')
     print(weather_data_json)
     moon_weather_data_json = combined_data(moon_data_json,weather_data_json)
@@ -180,12 +222,21 @@ def moon_data_request():
     print(moon_weather_data_json)
     return jsonify(moon_weather_data_json)
 
+<<<<<<< HEAD
+@app.route('/api/v1.0/stay-places/<lat>/<lon>', methods=['POST'])
+def stay_at_darkplace(lat,lon):
+    # data = request.get_json() 
+    # print(data)
+    # lat = data.get('lat')
+    # lon = data.get('lon')
+=======
 @app.route('/api/v1.0/stay-places', methods=['POST'])
 def stay_at_darkplace():
     data = request.get_json() 
     print(data)
     lat = data.get('lat')
     lon = data.get('lon')
+>>>>>>> 4bfaf136bb425588d00514d128a697b51bab6dd1
     print(lat)
     stay_places_data, radius = get_stay_places(lat, lon)
     print('stay_places_data')

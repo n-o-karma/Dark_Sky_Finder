@@ -1,9 +1,4 @@
-// Read the light pollution from flask
-let flaskpath = 'http://127.0.0.1:5000/api/v1.0/allstates';
-let state = "";
-d3.json('http://127.0.0.1:5000/api/v1.0/allstates').then(console.log("Flask fetched"));
-
-// Read in the light pollution data from csv
+// Read in the light pollution data
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
 
@@ -32,8 +27,24 @@ function createLayers(response) {
         let lat = e.latlng.lat;
         let lon = e.latlng.lng;
         console.log('Clicked marker at latitude: ' + lat + ', longitude: ' + lon);
-        // Make a POST request to the Flask server
-        fetch('http://localhost:5000/api/v1.0/stay-places', {
+        // Make a POST request to the Flask server for make moon and cloud table
+        fetch(`http://localhost:5000/api/v1.0/moon-weather-data/${lat}/${lon}`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+          },
+          body: JSON.stringify({lat: lat, lon: lon})
+          })
+        .then(response=> response.json())
+        .then(moon_weather_data => {
+          // do stuff with moon_weather data
+          const jsonData = JSON.parse(moon_weather_data);
+          createMoonWeatherDataTable(jsonData)
+        })
+        .catch(error => console.error('Error:', error));
+
+        // Make a POST request to the Flask server for make stay table and markers
+        fetch(`http://localhost:5000/api/v1.0/stay-places/${lat}/${lon}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json;charset=UTF-8'
@@ -122,7 +133,6 @@ let nextmoonphases = [{}];
 // Make table of moon_weather_data
 function createMoonWeatherDataTable(data) {
   resetTableCloud();
-  resetTableStay();
   addTableHeadersCloud();
   const moonDataBody = document.getElementById('moonDataBody');
   nextmoonphases = [{}];
@@ -183,19 +193,19 @@ function onStateSelectChange(state){
     return getStateCoordinates(response, state)}
   )
   .then((stateCoords) => {
-    fetch('http://localhost:5000/api/v1.0/moon-weather-data', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: JSON.stringify(stateCoords)})
-    .then(response=> response.json())
-    .then(moon_weather_data => {
-      // do stuff with moon_weather data
-      const jsonData = JSON.parse(moon_weather_data);
-      createMoonWeatherDataTable(jsonData)
-    })
-    .catch(error => console.error('Error:', error));
+    // fetch('http://localhost:5000/api/v1.0/moon-weather-data', {
+    //   method: 'POST',
+    //   headers: {
+    //       'Content-Type': 'application/json;charset=UTF-8'
+    //   },
+    //   body: JSON.stringify(stateCoords)})
+    // .then(response=> response.json())
+    // .then(moon_weather_data => {
+    //   // do stuff with moon_weather data
+    //   const jsonData = JSON.parse(moon_weather_data);
+    //   createMoonWeatherDataTable(jsonData)
+    // })
+    // .catch(error => console.error('Error:', error));
     
     map.flyTo(stateCoords,6);
   })
