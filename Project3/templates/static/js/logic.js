@@ -9,25 +9,26 @@ const stayIcon = L.icon({
 });
 
 let oldStayMarkerGroup = null;
-// Use light pollution data to create 2 default map layers and a dynamic one for lodging
+// Use light pollution data to create 2 default map layers
 function createLayers(response) {
   let myMarkers = [];
   let heatArray = [];
   let stayMarkerLayer = [];
   for (let i = 0; i < response.length; i++) {
     let event = response[i];
-    // Use data points with dark skies; i.e. NELM >= 4
+    // Select data points with dark skies; i.e. NELM >= 4
     if (event.NELM >= 4){
       let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `);
       // Add these points individually and as a heatmap
       myMarkers.push(myMark);
       heatArray.push([event.Latitude, event.Longitude]);
+      // Add onClick functionality to data points
       myMark.on('click', function(e) {
-        // Get latitude and longitude from the event
+        // Get latitude and longitude from the click event
         let lat = e.latlng.lat;
         let lon = e.latlng.lng;
         console.log('Clicked marker at latitude: ' + lat + ', longitude: ' + lon);
-        // Make a POST request to the Flask server for make moon and cloud table
+        // Make a POST request to the Flask server to make moon and cloud table
         fetch(`http://localhost:5000/api/v1.0/moon-weather-data/${lat}/${lon}`, {
           method: 'POST',
           headers: {
@@ -37,13 +38,12 @@ function createLayers(response) {
           })
         .then(response=> response.json())
         .then(moon_weather_data => {
-          // do stuff with moon_weather data
           const jsonData = JSON.parse(moon_weather_data);
           createMoonWeatherDataTable(jsonData)
         })
         .catch(error => console.error('Error:', error));
 
-        // Make a POST request to the Flask server for make stay table and markers
+        // Make a POST request to the Flask server to make lodging table and markers
         fetch(`http://localhost:5000/api/v1.0/stay-places/${lat}/${lon}`, {
           method: 'POST',
           headers: {
@@ -60,9 +60,10 @@ function createLayers(response) {
           let stayMarker = L.marker([place.latitude, place.longitude], {icon: stayIcon}).bindPopup(place.name);
           stayMarkerLayer.push(stayMarker)
           });
-          
+
+          // Remove the old lodging markers on a new click event
           let stayMarkerGroup = L.layerGroup(stayMarkerLayer)
-          if( oldStayMarkerGroup){
+          if(oldStayMarkerGroup){
             map.removeLayer(oldStayMarkerGroup)
           }
           oldStayMarkerGroup = stayMarkerGroup
@@ -120,6 +121,7 @@ let baseMaps = {
   "Light Sources":NASAGIBS_ViirsEarthAtNight2012
 };
 
+// The function that returns state coordinates
 function getStateCoordinates(response, state){
   for (item of response.features){
     if (item.properties.state_code == state){
@@ -129,16 +131,21 @@ function getStateCoordinates(response, state){
   throw new Error("Unable to find valid state latitude and longitude");
 };
 
+// Define an array of objects that will hold lunar data
 let nextmoonphases = [{}];
-// Make table of moon_weather_data
+
+// Make the moon+weather table and draw moon phases
 function createMoonWeatherDataTable(data) {
   resetTableCloud();
   addTableHeadersCloud();
-  const moonDataBody = document.getElementById('moonDataBody');
-  nextmoonphases = [{}];
-  data.forEach(row => {
-      nextmoonphases.push({"date": row.date,"moon_illumination": row.moon_illumination,"moon_phase": row.moon_phase})
 
+  const moonDataBody = document.getElementById('moonDataBody');
+
+  // Reset the array each time the table is updated
+  nextmoonphases = [{}];
+
+  data.forEach(row => {
+      // Populate the table
       const newRow = document.createElement('tr');
       const dateCell = document.createElement('td');
       dateCell.appendChild(document.createTextNode(row.date));
@@ -157,23 +164,29 @@ function createMoonWeatherDataTable(data) {
       newRow.appendChild(cloudCell);
 
       moonDataBody.appendChild(newRow);
+
+      // Add lunar data to the array
+      nextmoonphases.push({"date": row.date,"moon_illumination": row.moon_illumination,"moon_phase": row.moon_phase})
   });
+  // Draw moon phases and create line chart
   moondrawing(nextmoonphases);
 };
 
-// Make table of staying
+// Make the lodging table
 function createStayTable(data,radius) {
   resetTableStay();
   addTableHeadersStay();
+
   const stayDataBody = document.getElementById('stayDataBody');
-  console.log("test1")
-  console.log(radius);
+
+  // If no lodging can be found, notify the user
   if (data.length === 0) {
     const newRow = document.createElement('tr');
     const newCell = document.createElement('td');
     newCell.textContent = `Sorry, we cannot find any accommodation within  ${radius/1000} kilometers`;
     newRow.appendChild(newCell);
     stayDataBody.appendChild(newRow);
+    // Else, populate the table
   } else {
     data.forEach(item => {
       const newRow = document.createElement('tr');
@@ -185,34 +198,20 @@ function createStayTable(data,radius) {
   };
 };
 
+// When a new state is selected from the dropdown menu ..
 function onStateSelectChange(state){
   let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
-  
   d3.json(geoapify_url)
   .then(response => {
+    // Get the coordinates of the new state from geoapify
     return getStateCoordinates(response, state)}
   )
-  .then((stateCoords) => {
-    // fetch('http://localhost:5000/api/v1.0/moon-weather-data', {
-    //   method: 'POST',
-    //   headers: {
-    //       'Content-Type': 'application/json;charset=UTF-8'
-    //   },
-    //   body: JSON.stringify(stateCoords)})
-    // .then(response=> response.json())
-    // .then(moon_weather_data => {
-    //   // do stuff with moon_weather data
-    //   const jsonData = JSON.parse(moon_weather_data);
-    //   createMoonWeatherDataTable(jsonData)
-    // })
-    // .catch(error => console.error('Error:', error));
-    
-    map.flyTo(stateCoords,6);
-  })
+  // Then pan to the new state on the map with those coordinates
+  .then((stateCoords) => {map.flyTo(stateCoords,6)})
   .catch(error => console.error('Error:', error));
 };
 
-// Make a table header for moonCoudTable
+// Make a header for the moon+cloud table
 function addTableHeadersCloud() {
   const tableHeaders1 = ["Date", "Moon Illumination", "Moon Phase","Cloud Cover (Total)"];
   const headerRow1 = document.getElementById('tableHeaders');
@@ -236,7 +235,7 @@ function addTableHeadersCloud() {
 };
 
 
-// reset the cloud table after selecting another state
+// Reset the moon+cloud table after selecting another state
 function resetTableCloud() {
   const moonDataBody = document.getElementById('moonDataBody');
   const headerRow = document.getElementById('tableHeaders');
@@ -249,7 +248,7 @@ function resetTableCloud() {
   };
 };
 
-// make stay table head
+// Make a header for the lodging table
 function addTableHeadersStay() {
   const stayHeaders = document.getElementById('stayHeaders');
   const tr = document.createElement('tr');
@@ -261,7 +260,7 @@ function addTableHeadersStay() {
   stayHeaders.appendChild(tr);
 };
 
-// reset the stay table after selecting another dark place
+// Reset the lodging table after selecting another data point
 function resetTableStay() {
   const stayDataBody = document.getElementById('stayDataBody');
   const stayHeaders = document.getElementById('stayHeaders');
@@ -274,14 +273,22 @@ function resetTableStay() {
   };
 };
 
-function makeChart(nextmoonphases){
+// Use Chart.js to draw a line graph of moon visibility
+function makeGraph(nextmoonphases){
+  // Clear the data handlers
   thelabels = [];
   thedata = [];
+
+  // Extract the necessary data; only consider dates with valid illumination values
   for (let i = 1; i < nextmoonphases.length; i++){
-    thelabels.push(nextmoonphases[i].date);
-    thedata.push(nextmoonphases[i].moon_illumination);
+    if (nextmoonphases[i].moon_illumination != ''){
+      thelabels.push(nextmoonphases[i].date);
+      thedata.push(nextmoonphases[i].moon_illumination); 
+    };
   };
+
   let theChartArea = document.getElementById('myChart');
+  // Draw the plot
   let theChart = new Chart(theChartArea,{
     type:'line',
     options: {
@@ -305,30 +312,35 @@ function makeChart(nextmoonphases){
   });
 };
 
-// Starting values for the moon drawing:
+// Define starting values for the moon drawing
 let waxing = true;
 let css_style = {
   diameter: 100,
   earthshine: 0.1,
   blur:10,
   lightColour: '#fff0b1'};
-// let mooncontainer = document.getElementById("moondrawing")
 
+// Draw lunar phases and call our Chart.js function 
 function moondrawing(nextmoonphases) {
-  makeChart(nextmoonphases)
-  resetTableMoon()
+  makeGraph(nextmoonphases)
+  resetMoons()
   let moonphases = [];
   let header = d3.select("#moonheaders");
   let drawings = d3.select("#moondrawing")
 
+  
   for (let i = 1; i < nextmoonphases.length; i++) {
+    // Convert moon illumination from percent to decimal values
     let newshadow = nextmoonphases[i].moon_illumination/100;
     moonphases.push(newshadow);
     
+    // Populate the moon drawing table
     header.append("th").text(nextmoonphases[i].date);
+    // If a full/new moon occurs, the shadow on the moon switches sides
     if (nextmoonphases[i].moon_phase == 'Full'|| nextmoonphases[i].moon_phase == 'New'){
       waxing = !waxing
     };
+    // As long as data for the date 'i' exists, draw a moon
     if (nextmoonphases[i].moon_phase != ''){
       drawings.append("td").attr("id", `phase_${i-1}`)
       drawPlanetPhase(document.getElementById(`phase_${i-1}`), moonphases[i-1], waxing, css_style);
@@ -336,7 +348,8 @@ function moondrawing(nextmoonphases) {
   };
 };
 
-function resetTableMoon() {
+// When a new location is selected, reset the moon phase drawings
+function resetMoons() {
   const moonHeaders = document.getElementById('moonheaders');
   const moonData = document.getElementById('moondata');
   const moonDrawing = document.getElementById('moondrawing');
