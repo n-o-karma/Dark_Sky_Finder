@@ -73,9 +73,9 @@ def bystate(state):
 
     """Return a list of passenger data including the name, age, and sex of each passenger"""
     # Query all passengers
-    results = session.query(Lightpoldb.Latitude,Lightpoldb.Longitude,
-                            Lightpoldb.NELM, Lightpoldb.Constellation,
-                            Lightpoldb.State, Lightpoldb.Bortle_Class).filter(Lightpoldb.State == state).all()
+    results = session.query(Lpdb.Latitude,Lpdb.Longitude,
+                            Lpdb.NELM, Lpdb.Constellation,
+                            Lpdb.State, Lpdb.Bortle_Class).filter(Lpdb.State == state).all()
 
     session.close()
 

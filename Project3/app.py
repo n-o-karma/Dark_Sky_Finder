@@ -7,6 +7,28 @@ import json
 # pip install -U flask-cors
 from api_keys import geoapify_key
 
+#imports for lightpol flask:
+import sqlalchemy
+import os
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, func
+import numpy as np
+
+#################################################
+# Light Pollution Database Setup
+#################################################
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+engine = create_engine("sqlite:///templates/final_lightpollution.sqlite")
+
+# reflect an existing database into a new model
+Base = automap_base()
+# reflect the tables
+Base.prepare(engine, reflect=True)
+
+# Save reference to the table
+Lpdb = Base.classes.lightpollution
+
 app = Flask(__name__)
 CORS(app)
 
@@ -181,6 +203,56 @@ def stay_at_darkplace(lat,lon):
         'stay_places_data': stay_places_data,
         'radius': radius
     })
+
+### Routes for lightpol db:
+@app.route("/api/v1.0/allstates")
+def allstates():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of all passenger names"""
+    # Query all states
+    results = session.query(Lpdb.Latitude, Lpdb.Longitude, 
+                            Lpdb.NELM, Lpdb.Constellation, 
+                            Lpdb.State, Lpdb.Bortle_Class).all()
+
+    session.close()
+
+    # Convert list of tuples into normal list
+    all_states = list(np.ravel(results))
+
+    return jsonify(all_states)
+
+
+@app.route(f"/api/v1.0/bystate/<state>")
+def bystate(state):
+    print('state')
+    print(state)
+    print('state')
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of passenger data including the name, age, and sex of each passenger"""
+    # Query all passengers
+    results = session.query(Lpdb.Latitude, Lpdb.Longitude,
+                            Lpdb.NELM, Lpdb.Constellation,
+                            Lpdb.State, Lpdb.Bortle_Class).filter(Lpdb.State == state).all()
+
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of all_passengers
+    filtered_db = []
+    for latitude, longitude, nelm, constellation, state, bortleclass in results:
+        lightpol_dict = {}
+        lightpol_dict["State"] = state
+        lightpol_dict["Latitude"] = latitude
+        lightpol_dict["Longitude"] = longitude
+        lightpol_dict["NELM"] = nelm
+        lightpol_dict["Constellation"] = constellation
+        lightpol_dict["Bortle_class"] = bortleclass
+        filtered_db.append(lightpol_dict)
+
+    return jsonify(filtered_db)
 
 if __name__ == '__main__':
     app.run(debug=True)
