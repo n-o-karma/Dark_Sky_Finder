@@ -154,23 +154,12 @@ def get_stay_places(lat, lon):
 
     return stay_places_data, radius
 
-##test for moon_data function
-# lat = 39.952583
-# lon = -75.165222
-# moon_data_json = moon_data(lat, lon)
-# weather_data_json = weather_data(lat, lon)
-# moon_weather_json = combined_data(moon_data_json,weather_data_json)
-# print(moon_weather_json)
-
 @app.route('/')
 def home():
     return render_template('index.html')
 
 @app.route("/api/v1.0/moon-weather-data/<lat>/<lon>", methods=['POST'])
 def moon_data_request(lat,lon):
-    # selected_location = request.get_json()
-    # print('selected_location')
-    # print(selected_location)
     moon_data_json = moon_data(lat, lon)
     print('moon_data_json')
     print(moon_data_json)
@@ -184,10 +173,6 @@ def moon_data_request(lat,lon):
 
 @app.route('/api/v1.0/stay-places/<lat>/<lon>', methods=['POST'])
 def stay_at_darkplace(lat,lon):
-    # data = request.get_json() 
-    # print(data)
-    # lat = data.get('lat')
-    # lon = data.get('lon')
     print(lat)
     stay_places_data, radius = get_stay_places(lat, lon)
     print('stay_places_data')

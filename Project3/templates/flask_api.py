@@ -21,7 +21,7 @@ Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 # Save reference to the table
-Lightpoldb = Base.classes.lightpollution
+Lightpoldb = Base.classes
 
 #################################################
 # Flask Setup

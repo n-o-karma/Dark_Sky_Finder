@@ -2,9 +2,14 @@
 let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
 d3.csv(lightpollu_path).then(createLayers);
 
-// Create a custom leaflet icon for lodging
+// Create a set of custom leaflet icons
+const myIcon = L.icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/2536/2536650.png',
+  iconSize: [30, 30],
+});
+
 const stayIcon = L.icon({
-  iconUrl: 'static/css/stay_icon.jpg',
+  iconUrl: 'https://icon-library.com/images/accommodation-icon/accommodation-icon-6.jpg',
   iconSize: [30, 30],
 });
 
@@ -15,13 +20,14 @@ function createLayers(response) {
   let heatArray = [];
   let stayMarkerLayer = [];
   for (let i = 0; i < response.length; i++) {
-    let event = response[i];
+    let point = response[i];
     // Select data points with dark skies; i.e. NELM >= 4
-    if (event.NELM >= 4){
-      let myMark = L.marker([event.Latitude, event.Longitude]).bindPopup(`<h2> ${event.State}, </h2> <h2> NELM ${event.NELM} </h2> `);
+    if (point.NELM >= 4){
+      let myMark = L.marker([point.Latitude, point.Longitude],{icon:myIcon}).bindPopup(`<h2> ${point.State}, </h2> <h2> NELM ${point.NELM} </h2> `);
       // Add these points individually and as a heatmap
       myMarkers.push(myMark);
-      heatArray.push([event.Latitude, event.Longitude]);
+      heatArray.push([point.Latitude, point.Longitude]);
+      
       // Add onClick functionality to data points
       myMark.on('click', function(e) {
         // Get latitude and longitude from the click event
@@ -75,7 +81,6 @@ function createLayers(response) {
     };
   };
 
-
   //Control for layers 
   let overlayMaps = {
     "Data Sites": L.layerGroup(myMarkers),
@@ -91,6 +96,26 @@ function createLayers(response) {
       L.geoJSON(feature.geometry).addTo(map)
     };
   });
+
+  // Making a map legend
+  let legend = L.control({ position: "bottomleft" });
+  legend.onAdd = function() {
+    let div = L.DomUtil.create("div", "info legend");
+    let labels = ['<strong>Markers</strong>'];
+
+    let legendInfo = "<div class=\"labels\">" + "</div>";
+    div.innerHTML = legendInfo;
+
+    labels.push(`<br> <i> <img src = 'https://cdn-icons-png.flaticon.com/512/2536/2536650.png' width = '15' height = '15' alt='Data Point' id='defaultIcon'> Data Point </i> <br> `);
+    labels.push(`<i> <img src = 'https://icon-library.com/images/accommodation-icon/accommodation-icon-6.jpg' width = '15' height = '15' alt='Lodging' id='lodgingIcon'> Lodging </i> <br> `);
+    labels.push('<strong>Heatmap</strong>');
+    // labels.push() Heatmap info
+
+    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+  return div;
+  };
+
+  legend.addTo(map);
 };
 
 // Satellite image tiles
@@ -273,6 +298,8 @@ function resetTableStay() {
   };
 };
 
+let theChart;
+
 // Use Chart.js to draw a line graph of moon visibility
 function makeGraph(nextmoonphases){
   // Clear the data handlers
@@ -287,10 +314,18 @@ function makeGraph(nextmoonphases){
     };
   };
 
+  // Set up plot parameters
   let theChartArea = document.getElementById('myChart');
-  // Draw the plot
-  let theChart = new Chart(theChartArea,{
+  let data = {
+    labels: thelabels,
+    datasets: [{
+      label: 'Moon Visibility (%)',
+      data: thedata
+    }]
+  };
+  let configuration = {
     type:'line',
+    data,
     options: {
       animation: true,
       plugins: {
@@ -301,15 +336,17 @@ function makeGraph(nextmoonphases){
           enabled: true
         }
       }
-    },
-    data: {
-      labels: thelabels,
-      datasets: [{
-        label: 'Moon Visibility (%)',
-        data: thedata
-      }]
     }
-  });
+  };
+  
+  // If there is already a chart occupying the div, delete it before trying to draw the new one
+  if (theChart){
+    theChart.destroy()
+    theChart = new Chart(theChartArea,configuration)
+  }
+  else{
+    theChart = new Chart(theChartArea,configuration)
+  };
 };
 
 // Define starting values for the moon drawing
