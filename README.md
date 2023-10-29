@@ -1,7 +1,7 @@
 <h1>☆ Dark Sky Finder ☆</h1>
 
 We created an interactive map you can use to plan your stargazing trip! 
-The map allows you to select the state of your choice and will then populate markers in the best locations for stargazing on a terrain or light source map, as well as hotels and camping sites nearby. Based on the location you choose you will then be able to see the moon phases and visibility for optimum viewing.<br />
+The map allows you to select the state of your choice and will then populate markers in the best locations for stargazing on a terrain or light source map, as well as hotels and camping sites nearby. Based on the location and date you select you will then be able to see the moon phases and visibility for optimum viewing.<br />
 
 <img width="1269" alt="Screenshot 2023-10-29 at 10 30 26 AM" src="https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/3b2d5648-efcd-46bd-bbeb-494885feb8ff"><br />
 
