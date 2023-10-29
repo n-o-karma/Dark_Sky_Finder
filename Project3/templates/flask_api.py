@@ -21,7 +21,7 @@ Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 # Save reference to the table
-Lightpoldb = Base.classes
+Lpdb = Base.classes.lightpollution
 
 #################################################
 # Flask Setup
@@ -51,9 +51,9 @@ def allstates():
 
     """Return a list of all passenger names"""
     # Query all states
-    results = session.query(Lightpoldb.Latitude,Lightpoldb.Longitude, 
-                            Lightpoldb.NELM, Lightpoldb.Constellation, 
-                            Lightpoldb.State, Lightpoldb.Bortle_Class).all()
+    results = session.query(Lpdb.Latitude, Lpdb.Longitude, 
+                            Lpdb.NELM, Lpdb.Constellation, 
+                            Lpdb.State, Lpdb.Bortle_Class).all()
 
     session.close()
 
@@ -73,9 +73,9 @@ def bystate(state):
 
     """Return a list of passenger data including the name, age, and sex of each passenger"""
     # Query all passengers
-    results = session.query(Lightpoldb.Latitude,Lightpoldb.Longitude,
-                            Lightpoldb.NELM, Lightpoldb.Constellation,
-                            Lightpoldb.State, Lightpoldb.Bortle_Class).filter(Lightpoldb.State == state).all()
+    results = session.query(Lpdb.Latitude,Lpdb.Longitude,
+                            Lpdb.NELM, Lpdb.Constellation,
+                            Lpdb.State, Lpdb.Bortle_Class).filter(Lpdb.State == state).all()
 
     session.close()
 
