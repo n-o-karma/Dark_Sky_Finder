@@ -29,7 +29,9 @@ And if you’re really passionate about stargazing you can get a Sky quality met
 
 We hope you enjoy our interactive map!<br />
 
-⋆ To use map use the template folder to access the html ⋆ 
+⋆ To use the map use the template folder to access the html ⋆ <br />
+
+
 
 By Nick O'Karma, Stephen Smith, Hannah Whang, Desiree Trevino, Elizabeth Di Scala, Michael Cariello, and Crystal Lucas
 
