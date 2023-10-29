@@ -7,7 +7,7 @@ The map allows you to select the state of your choice and will then populate mar
 
 
 We used two different libraries to show Moon phases for the next 10 days. <br />
-You can select the date you are planning to go to see the moon phase for that time. It's best to stargaze 2 weeks before and after the New Moon. A brighter moon means those objects in visual vicinity become increasingly more difficult to see due to the glow we observe that is the moon reflecting sunlight. 
+You can select the date you are planning to go to see the moon phase for that time. It's best to stargaze 2 weeks before and after the New Moon. A brighter moon means those objects in visual vicinity become increasingly more difficult to see due to the glow we observe that is the moon reflecting sunlight. <br />
 We also created a moon and weather table for further details about your trip. <br />
 
 ![Phasesmoon-1269x439](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/a00a7082-6cf1-4690-9b4a-df281a4e5925)<br />
