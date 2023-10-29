@@ -33,7 +33,6 @@ function createLayers(response) {
         // Get latitude and longitude from the click event
         let lat = e.latlng.lat;
         let lon = e.latlng.lng;
-        console.log('Clicked marker at latitude: ' + lat + ', longitude: ' + lon);
         // Make a POST request to the Flask server to make moon and cloud table
         fetch(`http://localhost:5000/api/v1.0/moon-weather-data/${lat}/${lon}`, {
           method: 'POST',
@@ -59,7 +58,6 @@ function createLayers(response) {
         })
         .then(response => response.json())
         .then(data => {
-          console.log('Response from Flask server:', data);
           createStayTable(data.stay_places_data, data.radius);
 
           data.stay_places_data.forEach(place => {
@@ -108,8 +106,6 @@ function createLayers(response) {
 
     labels.push(`<br> <i> <img src = 'https://cdn-icons-png.flaticon.com/512/2536/2536650.png' width = '15' height = '15' alt='Data Point' id='defaultIcon'> Data Point </i> <br> `);
     labels.push(`<i> <img src = 'https://icon-library.com/images/accommodation-icon/accommodation-icon-6.jpg' width = '15' height = '15' alt='Lodging' id='lodgingIcon'> Lodging </i> <br> `);
-    labels.push('<strong>Heatmap</strong>');
-    // labels.push() Heatmap info
 
     div.innerHTML += "<ul>" + labels.join("") + "</ul>";
   return div;
