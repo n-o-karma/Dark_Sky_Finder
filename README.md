@@ -12,10 +12,11 @@ You can select the date you are planning to go and plan for a time 2 weeks befor
 ![Phasesmoon-1269x439](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/a00a7082-6cf1-4690-9b4a-df281a4e5925)<br />
 
 
+
 You will also see a NELM number with the markers. NELM is the Naked-Eye Limiting Magnitude which is the apparent magnitude of the faintest stars can be seen with the naked eye from a specific location on Earth. It measures the darkness of the night sky and the quality of observing conditions. <br />
 
 
-![Sky-brightness-indicator-Bortle-Dark-Sky-Scale](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/ad55458a-ea8d-406f-8210-f14da4990d8c)<br />
+![Sky-brightness-indicator-Bortle-Dark-Sky-Scale-1269x800](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/ad55458a-ea8d-406f-8210-f14da4990d8c)<br />
 
 The Bortle Scale is more commonly used today to estimate the brightness of the night sky. It is a 9-level numeric scale used to describe the darkness of the night sky. Class 1 would be no light pollution at all. The darkest sky. Class 9 would be an  Inner City sky, with very little visibility. Similiar to the heat map.<br />
 
