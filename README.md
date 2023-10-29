@@ -7,7 +7,7 @@ The map allows you to select the state of your choice and will populate markers 
 
 
 We used two different libraries to show Moon phases for the next 10 days. <br />
-You can select the date you are planning to go and plan for a time 2 weeks before and after the New Moon. A brighter moon means those objects in visual vicinity become increasingly more difficult to see due to the glow we observe that is the moon reflecting sunlight.<br />
+You can select the date you are planning to go and plan for a time 2 weeks before and after the New Moon. A brighter moon means those objects in visual vicinity become increasingly more difficult to see due to the glow we observe that is the moon reflecting sunlight. We also created a moon and weather table. <br />
 
 ![Phasesmoon-1269x439](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/a00a7082-6cf1-4690-9b4a-df281a4e5925)<br />
 
