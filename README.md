@@ -7,13 +7,13 @@ The map allows you to select the state of your choice and will then populate mar
 
 
 We used two different libraries to show Moon phases for the next 10 days. <br />
-You can select the date you are planning to go and plan for a time 2 weeks before and after the New Moon. A brighter moon means those objects in visual vicinity become increasingly more difficult to see due to the glow we observe that is the moon reflecting sunlight. We also created a moon and weather table. <br />
+You can select the date you are planning to go to see the moon phase for that time. It's to stargaze 2 weeks before and after the New Moon. A brighter moon means those objects in visual vicinity become increasingly more difficult to see due to the glow we observe that is the moon reflecting sunlight. We also created a moon and weather table for further details about your trip. <br />
 
 ![Phasesmoon-1269x439](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/a00a7082-6cf1-4690-9b4a-df281a4e5925)<br />
 
 
 
-You will also see a NELM number with the markers. NELM is the Naked-Eye Limiting Magnitude which is the apparent magnitude of the faintest stars can be seen with the naked eye from a specific location on Earth. It measures the darkness of the night sky and the quality of observing conditions. <br />
+You will also see a NELM number with the markers on the map. NELM is the Naked-Eye Limiting Magnitude which is the apparent magnitude of the faintest stars can be seen with the naked eye from a specific location on Earth. It measures the darkness of the night sky and the quality of observing conditions. <br />
 
 ![nelm](https://github.com/n-o-karma/Dark_Sky_Finder/assets/134230685/8e36e29e-2542-4aee-8f5e-154ae97662e6)
 
