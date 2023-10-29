@@ -25,7 +25,7 @@ The Bortle Scale is more commonly used today to estimate the brightness of the n
 
 Overall, you want somewhere at least 30 miles from the biggest city, ideally, you’d want it further, where there is very little light pollution, no clouds, fog, moisture, haze, etc. The higher the altitude the better. Check the weather for cloudy conditions, precipitation, and visibility. Plan around the moon phases.<br />
 
-And if you’re really passionate about stargazing you can get a Sky quality meter which measures the brightness of the night sky and you can submit that data to Globe at Night. This information will help us better understand our evolving night sky conditions and how we can make changes to enhance the aesthetics of the night sky for viewing pleasure.  
+And if you’re really passionate about stargazing you can get a Sky Quality Meter which measures the brightness of the night sky and you can submit that data to Globe at Night. This information will help us better understand our evolving night sky conditions and how we can make changes to enhance the aesthetics of the night sky for viewing pleasure.  
 
 We hope you enjoy our interactive map!<br />
 
