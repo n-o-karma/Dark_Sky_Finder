@@ -29,7 +29,7 @@ And if you’re really passionate about stargazing you can get a Sky Quality Met
 
 We hope you enjoy our interactive map!<br />
 
-⋆ To use the map use the template folder to access the html ⋆ <br />
+✴ To use the map use the template folder to access the html ✴ <br />
 
 
 
