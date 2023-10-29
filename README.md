@@ -27,7 +27,9 @@ Overall, you want somewhere at least 30 miles from the biggest city, ideally, yo
 
 And if you’re really passionate about stargazing you can get a Sky quality meter which measures the brightness of the night sky and you can submit that data to Globe at Night. This information will help us better understand our evolving night sky conditions and how we can make changes to enhance the aesthetics of the night sky for viewing pleasure.  
 
-We hope you enjoy our interactive map!
+We hope you enjoy our interactive map!<br />
+
+By Nick O'Karma, Stephen Smith, Hannah Whang, Desiree Trevino, Elizabeth Di Scala, Michael Cariello, and Crystal Lucas
 
 
 
