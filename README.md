@@ -36,9 +36,3 @@ We hope you enjoy our interactive map!<br />
 
 By Nick O'Karma, Stephen Smith, Hannah Whang, Desiree Trevino, Elizabeth Di Scala, Michael Cariello, and Crystal Lucas
 
-
-
-#### comments (Hannah) : 
-* If you show the moon weather table, run app.py first to open flask server, then open index.html.
-* Adam made new logic.js putting together Desiree's and mine. It works very well.
-
