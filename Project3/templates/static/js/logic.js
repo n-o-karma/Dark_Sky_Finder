@@ -1,8 +1,7 @@
 // Read in the light pollution data
-let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
-d3.csv(lightpollu_path).then(createLayers);
+//let lightpollu_path = '../api_data/Resources/lightpollution_v2.csv';
+//d3.csv(lightpollu_path).then(createLayers);
 
-//
 ///////////// This is the code to get lightpol db from flask ///////////// 
 
     // Variables with paths for each call:
@@ -10,19 +9,9 @@ d3.csv(lightpollu_path).then(createLayers);
     // allstatespath is a json with the complete database
     let allstatespath = 'http://127.0.0.1:5000/api/v1.0/allstates';
 
-    // state is a variable that will hold the selected state name 
-      // Need to assign its value later when the user chooses from the dropdown menu
-    let selected_state = "";
-    // statepath is a dynamic url that receives the selected state
-    let statepath = `/api/v1.0/bystate/${selected_state}`
-
     // D3 call for all states:
 
-    d3.json(allstatespath).then(); //call create layers inside of then
-
-    // D3 call for selected state:
-
-    d3.json(statepath).then(); //call next function needed inside of then
+    d3.json(allstatespath).then(createLayers); //call create layers inside of then
 
 /////////////  End of code to get lightpol db from flask ///////////// 
 
@@ -40,6 +29,7 @@ const stayIcon = L.icon({
 let oldStayMarkerGroup = null;
 // Use light pollution data to create 2 default map layers
 function createLayers(response) {
+  console.log(response)
   let myMarkers = [];
   let heatArray = [];
   let stayMarkerLayer = [];
@@ -250,6 +240,8 @@ function createStayTable(data,radius) {
 // When a new state is selected from the dropdown menu ..
 function onStateSelectChange(state){
   let geoapify_url = `https://api.geoapify.com/v1/geocode/search?state=${state}&type=state&country=United%20States%20of%20America.&format=geojson&apiKey=${geoapify_key}`
+  // statepath is a dynamic url that receives the selected state
+  let statepath = `/api/v1.0/bystate/${state}`;
   d3.json(geoapify_url)
   .then(response => {
     // Get the coordinates of the new state from geoapify
@@ -258,6 +250,9 @@ function onStateSelectChange(state){
   // Then pan to the new state on the map with those coordinates
   .then((stateCoords) => {map.flyTo(stateCoords,6)})
   .catch(error => console.error('Error:', error));
+
+      // D3 call for selected state:
+    d3.json(statepath).then(); //call next function needed inside of then
 };
 
 // Make a header for the moon+cloud table

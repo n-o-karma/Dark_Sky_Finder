@@ -219,9 +219,18 @@ def allstates():
     session.close()
 
     # Convert list of tuples into normal list
-    all_states = list(np.ravel(results))
+    states_db = []
+    for latitude, longitude, nelm, constellation, state, bortleclass in results:
+        lightpol_dict = {}
+        lightpol_dict["State"] = state
+        lightpol_dict["Latitude"] = latitude
+        lightpol_dict["Longitude"] = longitude
+        lightpol_dict["NELM"] = nelm
+        lightpol_dict["Constellation"] = constellation
+        lightpol_dict["Bortle_class"] = bortleclass
+        states_db.append(lightpol_dict)
 
-    return jsonify(all_states)
+    return jsonify(states_db)
 
 
 @app.route(f"/api/v1.0/bystate/<state>")
@@ -240,7 +249,7 @@ def bystate(state):
 
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_passengers
+    # Create a dictionary from the row data and append to a list
     filtered_db = []
     for latitude, longitude, nelm, constellation, state, bortleclass in results:
         lightpol_dict = {}
